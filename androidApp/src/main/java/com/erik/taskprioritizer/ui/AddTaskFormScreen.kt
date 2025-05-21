@@ -46,6 +46,7 @@ fun AddTaskFormScreen () {
             .padding(16.dp)
     ) {
 
+        //Introductory text
         Text(
             text = "Add Task",
             fontSize = 24.sp,
@@ -59,6 +60,7 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        //Text and textfield element for task name
         Text(
             text = "Task Name:",
             fontSize = 20.sp,
@@ -98,6 +100,7 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        //Text element and slider for each criterium
         Text(
             text = "Benefit: ",
             fontSize = 20.sp,
@@ -170,6 +173,7 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        //Action buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
