@@ -21,14 +21,13 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.erik.taskprioritizer.android.R
-import com.erik.taskprioritizer.ui.theme.BackgroundColor
+import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.Orange
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen() {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
@@ -38,7 +37,7 @@ fun TaskListScreen() {
         "Share prototype with team",
         "Add unit tests",
         "Add e2e tests",
-        "Configurate db connection"
+        "Configure db connection"
     )
 
     Column(
@@ -47,6 +46,7 @@ fun TaskListScreen() {
             .background(Color.Black)
             .padding(16.dp)
     ) {
+        //Introductory text
         Text(
             text = "Product Log - Tasks",
             fontSize = 24.sp,
@@ -60,6 +60,7 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        //Search Bar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,6 +92,7 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        //Selection between all tasks or priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -119,6 +121,7 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        //Each task displayed
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
@@ -127,6 +130,8 @@ fun TaskListScreen() {
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
+
+        //Icons with certain action
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -148,7 +153,7 @@ fun TaskItem(taskTitle: String) {
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, Green),
         colors = CardDefaults.cardColors(
-            containerColor = BackgroundColor
+            containerColor = ContainerBackgroundColor
         )
     ) {
         Row(
