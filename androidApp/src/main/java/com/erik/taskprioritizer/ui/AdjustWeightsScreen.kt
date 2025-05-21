@@ -1,54 +1,47 @@
 package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
-import com.erik.taskprioritizer.ui.theme.BackgroundGray
+import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.TextGray
-import com.erik.taskprioritizer.ui.components.CustomSlider
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTaskFormScreen () {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-
+fun AdjustWeightsScreen() {
     Column (
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(16.dp)
     ) {
-
         //Introductory text
         Text(
-            text = "Add Task",
+            text = "Adjust Weights",
             fontSize = 24.sp,
             fontFamily = Montserrat,
             fontWeight = FontWeight.Black,
@@ -60,45 +53,24 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Text and textfield element for task name
+        //Warning text
         Text(
-            text = "Task Name:",
-            fontSize = 20.sp,
+            text = "Please ensure that the sum of all criterion " +
+                    "weights equals 1 before saving. This is " +
+                    "important to maintain accurate and consistent " +
+                    "priority calculations.",
+            fontSize = 12.sp,
             fontFamily = Montserrat,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-
-
-        TextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            placeholder = {
-                Text(
-                    text = "Create PR",
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    color = TextGray
-                )
-            },
+            color = TextGray,
+            textAlign = TextAlign.Center,
+            lineHeight = 14.sp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = BackgroundGray,
-                unfocusedContainerColor = BackgroundGray,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
-            ),
-            singleLine = true,
-            shape = RoundedCornerShape(20.dp)
+                .padding(horizontal = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(36.dp))
 
         //Text element and slider for each criterium
         Text(
@@ -192,7 +164,7 @@ fun AddTaskFormScreen () {
 
             TextButton(onClick = { /* TODO: uložení akce */ }) {
                 Text(
-                    text = "SAVE",
+                    text = "ADJUST",
                     color = Green,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Bold,
