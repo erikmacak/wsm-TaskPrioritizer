@@ -15,15 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.erik.taskprioritizer.android.R
+import com.erik.taskprioritizer.ui.theme.BackgroundColor
+import com.erik.taskprioritizer.ui.theme.BackgroundGray
+import com.erik.taskprioritizer.ui.theme.Blue
+import com.erik.taskprioritizer.ui.theme.Green
+import com.erik.taskprioritizer.ui.theme.Montserrat
+import com.erik.taskprioritizer.ui.theme.Orange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +50,8 @@ fun TaskListScreen() {
         Text(
             text = "Product Log - Tasks",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
+            fontFamily = Montserrat,
+            fontWeight = FontWeight.Black,
             color = Color.White,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -64,13 +68,21 @@ fun TaskListScreen() {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search", color = Color.White) },
+                placeholder = {
+                    Text(
+                        "Search",
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White)
+                              },
                 modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.DarkGray,
-                    unfocusedContainerColor = Color.DarkGray,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = BackgroundGray,
+                    unfocusedContainerColor = BackgroundGray,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
                 ),
                 singleLine = true,
                 shape = RoundedCornerShape(20.dp)
@@ -87,12 +99,21 @@ fun TaskListScreen() {
         ) {
             Button(
                 onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+                colors = ButtonDefaults.buttonColors(containerColor = Blue),
                 shape = RoundedCornerShape(20.dp)
             ) {
-                Text("All", color = Color.White)
+                Text(
+                    "All",
+                    color = Color.White,
+                    fontFamily = Montserrat,
+                    fontWeight = FontWeight.Bold)
             }
-            Text("Priorities", color = Color.White, modifier = Modifier.align(Alignment.CenterVertically))
+            Text(
+                "Priorities",
+                color = Color.White,
+                fontFamily = Montserrat,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.CenterVertically))
         }
 
 
@@ -125,9 +146,9 @@ fun TaskItem(taskTitle: String) {
             .height(56.dp)
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Color.Green),
+        border = BorderStroke(1.dp, Green),
         colors = CardDefaults.cardColors(
-            containerColor = Color.DarkGray
+            containerColor = BackgroundColor
         )
     ) {
         Row(
@@ -139,7 +160,8 @@ fun TaskItem(taskTitle: String) {
             Text(
                 text = taskTitle,
                 color = Color.White,
-                style = MaterialTheme.typography.bodyLarge
+                fontFamily = Montserrat,
+                fontWeight = FontWeight.Bold
             )
             Icon(
                 imageVector = Icons.Default.ArrowForward,
@@ -161,9 +183,9 @@ fun CenteredIconButtons() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularIconButton(R.drawable.id_plus, "Add Task", Color.Green)
-            CircularIconButton(R.drawable.id_edit, "Edit Weights", Color.Yellow)
-            CircularIconButton(R.drawable.id_recalc, "Recalculate", Color.Blue)
+            CircularIconButton(R.drawable.id_plus, "Add Task", Green)
+            CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange)
+            CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
         }
     }
 }
