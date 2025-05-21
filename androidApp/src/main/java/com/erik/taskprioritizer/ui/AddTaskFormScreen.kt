@@ -70,7 +70,7 @@ fun AddTaskFormScreen () {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+
 
         TextField(
             value = searchQuery,
