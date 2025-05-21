@@ -39,6 +39,7 @@ fun AdjustWeightsScreen() {
             .background(Color.Black)
             .padding(16.dp)
     ) {
+        //Introductory text
         Text(
             text = "Adjust Weights",
             fontSize = 24.sp,
@@ -52,6 +53,7 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        //Warning text
         Text(
             text = "Please ensure that the sum of all criterion " +
                     "weights equals 1 before saving. This is " +
@@ -70,6 +72,7 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(36.dp))
 
+        //Text element and slider for each criterium
         Text(
             text = "Benefit: ",
             fontSize = 20.sp,
@@ -142,6 +145,7 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        //Action buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
