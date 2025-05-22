@@ -24,7 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
+import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
@@ -40,15 +42,9 @@ fun AdjustWeightsScreen() {
             .padding(16.dp)
     ) {
         //Introductory text
-        Text(
+        IntroductoryText(
             text = "Adjust Weights",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -152,17 +148,9 @@ fun AdjustWeightsScreen() {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = { /* TODO: zpět akce */ }) {
-                Text(
-                    text = "BACK",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
+            BackActionButton()
 
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
+            TextButton(onClick = { /* uložení akce */ }) {
                 Text(
                     text = "ADJUST",
                     color = Green,
