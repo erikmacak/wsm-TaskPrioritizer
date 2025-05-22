@@ -2,6 +2,7 @@ package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +29,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
+import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
@@ -38,7 +42,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @ExperimentalMaterial3Api
 @Composable
 fun EditTaskFormScreen() {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    var searchQuery by remember { mutableStateOf("") }
 
     Column (
         modifier = Modifier
@@ -46,17 +50,9 @@ fun EditTaskFormScreen() {
             .background(Color.Black)
             .padding(16.dp)
     ) {
-
-        //Introductory text
-        Text(
+        IntroductoryText(
             text = "Edit Task",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -71,32 +67,19 @@ fun EditTaskFormScreen() {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
-        //Search bar
-        TextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            placeholder = {
-                Text(
-                    text = "Create PR",
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    color = TextGray
-                )
-            },
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = BackgroundGray,
-                unfocusedContainerColor = BackgroundGray,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
-            ),
-            singleLine = true,
-            shape = RoundedCornerShape(20.dp)
-        )
+                .padding(horizontal = 20.dp)
+                .padding(top = 8.dp)
+        ) {
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it },
+                textColor = TextGray,
+                placeholderValue = "Create PR"
+            )
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -180,19 +163,11 @@ fun EditTaskFormScreen() {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = { /* TODO: zpět akce */ }) {
-                Text(
-                    text = "BACK",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
+            BackActionButton()
 
             TextButton(onClick = { /* TODO: uložení akce */ }) {
                 Text(
-                    text = "SAVE",
+                    text = "ADJUST",
                     color = Green,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Bold,
