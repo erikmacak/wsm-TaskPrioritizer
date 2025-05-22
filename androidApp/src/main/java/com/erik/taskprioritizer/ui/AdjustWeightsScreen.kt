@@ -52,13 +52,14 @@ fun AdjustWeightsScreen() {
         }
     }
 
+    // Main column layout for the UI
     Column (
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(16.dp)
     ) {
-        //Introductory text
+        // Introductory text at the top of the screen
         IntroductoryText(
             text = "Adjust Weights",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -66,7 +67,7 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Warning text
+        // Warning text about weight adjustment
         Text(
             text = "Please ensure that the sum of all criterion " +
                     "weights equals 1 before saving. This is " +
@@ -104,7 +105,7 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        //Action buttons
+        // Action buttons for adjusting or going back
         Row(
             modifier = Modifier
                 .fillMaxWidth()
