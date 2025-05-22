@@ -46,7 +46,7 @@ fun TaskListScreen() {
             .background(Color.Black)
             .padding(16.dp)
     ) {
-        //Introductory text
+
         Text(
             text = "Product Log - Tasks",
             fontSize = 24.sp,

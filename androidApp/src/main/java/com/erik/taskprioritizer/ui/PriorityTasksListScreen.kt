@@ -63,6 +63,7 @@ fun PriorityTasksListScreen() {
             .padding(16.dp)
         ) {
 
+        //Introductory text
         Text(
             text = "Sorted By Priorities",
             fontSize = 24.sp,
@@ -76,7 +77,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-
+        //Search Bar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,7 +109,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-
+        //Selection between all tasks or priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -138,7 +139,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-
+        //Each task displayed
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
@@ -148,7 +149,7 @@ fun PriorityTasksListScreen() {
             }
         }
 
-
+        //Export possibilities
         Row(
             modifier = Modifier
                 .fillMaxWidth()
