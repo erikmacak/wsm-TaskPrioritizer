@@ -1,16 +1,21 @@
 package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -21,22 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
+import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.TextGray
-import com.erik.taskprioritizer.ui.components.CustomSlider
 
 @ExperimentalMaterial3Api
 @Composable
-fun AddTaskFormScreen () {
+fun EditTaskFormScreen() {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
     Column (
@@ -48,7 +49,7 @@ fun AddTaskFormScreen () {
 
         //Introductory text
         Text(
-            text = "Add Task",
+            text = "Edit Task",
             fontSize = 24.sp,
             fontFamily = Montserrat,
             fontWeight = FontWeight.Black,
