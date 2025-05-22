@@ -70,8 +70,7 @@ fun AddTaskFormScreen () {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
-
-
+        //Search bar
         TextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },

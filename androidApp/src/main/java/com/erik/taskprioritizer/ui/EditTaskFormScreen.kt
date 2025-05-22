@@ -47,6 +47,7 @@ fun EditTaskFormScreen() {
             .padding(16.dp)
     ) {
 
+        //Introductory text
         Text(
             text = "Edit Task",
             fontSize = 24.sp,
@@ -60,6 +61,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        //Text and textfield element for task name
         Text(
             text = "Task Name:",
             fontSize = 20.sp,
@@ -69,6 +71,7 @@ fun EditTaskFormScreen() {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
+        //Search bar
         TextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
@@ -97,6 +100,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        //Text element and slider for each criterium
         Text(
             text = "Benefit: ",
             fontSize = 20.sp,
@@ -169,6 +173,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        //Action buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
