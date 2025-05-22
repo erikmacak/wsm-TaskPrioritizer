@@ -37,6 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
@@ -46,7 +49,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @Composable
 fun PriorityTasksListScreen() {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    var searchQuery by remember { mutableStateOf("") }
 
     val tasks = listOf(
         "Fix landing page",
@@ -64,15 +67,9 @@ fun PriorityTasksListScreen() {
         ) {
 
         //Introductory text
-        Text(
+        IntroductoryText(
             text = "Sorted By Priorities",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -83,27 +80,9 @@ fun PriorityTasksListScreen() {
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         ) {
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                placeholder = {
-                    Text(
-                        "Search",
-                        fontFamily = Montserrat,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = BackgroundGray,
-                    unfocusedContainerColor = BackgroundGray,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
-                ),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it }
             )
         }
 
@@ -116,25 +95,16 @@ fun PriorityTasksListScreen() {
                 .padding(horizontal = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                "All",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterVertically))
+            // Button for selecting all tasks
+            SelectableTabButton(
+                text = "All",
+                selected = false,
+                onClick = { /* Navigace na TasksListScreen */ })
 
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Blue),
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    "Priorities",
-                    color = Color.White,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterVertically))
-            }
+            // Button for selecting priority tasks
+            SelectableTabButton(
+                text = "Priorities",
+                selected = true) { }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
