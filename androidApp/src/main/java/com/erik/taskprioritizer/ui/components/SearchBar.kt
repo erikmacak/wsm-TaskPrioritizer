@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Montserrat
@@ -16,17 +17,19 @@ import com.erik.taskprioritizer.ui.theme.Montserrat
 @Composable
 fun SearchBar(
     searchQuery: String,
-    onSearchQueryChange: (String) -> Unit
+    onSearchQueryChange: (String) -> Unit,
+    textColor: Color = Color.White,
+    placeholderValue: String = "Search"
 ) {
     TextField(
         value = searchQuery,
         onValueChange = onSearchQueryChange,
         placeholder = {
             Text(
-                "Search",
+                placeholderValue,
                 fontFamily = Montserrat,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = textColor,
             )
         },
         modifier = Modifier.fillMaxWidth(),
