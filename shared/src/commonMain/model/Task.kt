@@ -8,5 +8,6 @@ data class Task (
     val benefit: Int,
     val complexity: Int,
     val urgency: Int,
-    val risk:
+    val risk: Int,
+    var isExpanded: Boolean = false
 )
