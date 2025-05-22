@@ -24,11 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+import com.erik.taskprioritizer.ui.components.ExportPossibilities
 import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
-import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
-import com.erik.taskprioritizer.ui.components.ExportPossibilities
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable

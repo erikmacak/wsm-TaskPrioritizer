@@ -15,9 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.Blue
+
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
+import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Montserrat
+
 import kotlin.math.roundToInt
 
 @ExperimentalMaterial3Api

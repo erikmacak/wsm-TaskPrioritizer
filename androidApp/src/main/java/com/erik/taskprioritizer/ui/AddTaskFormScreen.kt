@@ -1,11 +1,11 @@
 package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -17,14 +17,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.Green
-import com.erik.taskprioritizer.ui.theme.TextGray
+
+import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
-import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.SliderHeading
+
+import com.erik.taskprioritizer.ui.theme.Green
+import com.erik.taskprioritizer.ui.theme.Montserrat
+import com.erik.taskprioritizer.ui.theme.TextGray
 
 @ExperimentalMaterial3Api
 @Composable
