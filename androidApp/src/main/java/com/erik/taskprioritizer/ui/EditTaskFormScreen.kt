@@ -19,6 +19,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,6 +44,21 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @Composable
 fun EditTaskFormScreen() {
     var searchQuery by remember { mutableStateOf("") }
+
+    // List of criteria
+    val criteria = listOf(
+        "Benefit",
+        "Complexity",
+        "Urgency",
+        "Risk"
+    )
+
+    // State map to hold slider values for each criterion, initialized to 0
+    val sliderValues = remember {
+        mutableStateMapOf<String, Float>().apply {
+            criteria.forEach{ put(it, 0f) }
+        }
+    }
 
     Column (
         modifier = Modifier
@@ -165,7 +181,7 @@ fun EditTaskFormScreen() {
         ) {
             BackActionButton()
 
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
+            TextButton(onClick = { /* upravení úkolu */ }) {
                 Text(
                     text = "ADJUST",
                     color = Green,
