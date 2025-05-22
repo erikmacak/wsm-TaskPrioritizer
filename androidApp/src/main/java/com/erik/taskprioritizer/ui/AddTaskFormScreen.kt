@@ -54,7 +54,6 @@ fun AddTaskFormScreen () {
             .background(Color.Black)
             .padding(16.dp)
     ) {
-
         // Introductory text at the top of the screen
         IntroductoryText(
             text = "Add Task",

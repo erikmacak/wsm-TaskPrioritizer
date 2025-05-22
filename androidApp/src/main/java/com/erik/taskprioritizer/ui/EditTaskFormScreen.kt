@@ -37,6 +37,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @ExperimentalMaterial3Api
 @Composable
 fun EditTaskFormScreen() {
+    // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
     // List of criteria
@@ -54,12 +55,14 @@ fun EditTaskFormScreen() {
         }
     }
 
+    // Main column layout for the UI
     Column (
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(16.dp)
     ) {
+        // Introductory text at the top of the screen
         IntroductoryText(
             text = "Edit Task",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -67,7 +70,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Text and textfield element for task name
+        // Label for the task name input
         Text(
             text = "Task Name:",
             fontSize = 20.sp,
@@ -77,6 +80,7 @@ fun EditTaskFormScreen() {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
+        // Box for the search bar to input the task name
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,7 +112,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Action buttons
+        // Action buttons for adjusting or going back
         Row(
             modifier = Modifier
                 .fillMaxWidth()
