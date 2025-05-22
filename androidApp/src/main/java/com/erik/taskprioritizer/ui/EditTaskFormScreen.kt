@@ -112,7 +112,7 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Action buttons for adjusting or going back
+        // Action buttons for editing or going back
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,7 +123,7 @@ fun EditTaskFormScreen() {
 
             TextButton(onClick = { /* upravení úkolu */ }) {
                 Text(
-                    text = "ADJUST",
+                    text = "EDIT",
                     color = Green,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Bold,
