@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
+import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
@@ -114,7 +115,7 @@ fun PriorityTasksListScreen() {
             modifier = Modifier.weight(1f)
         ) {
             items(tasks) { task ->
-                TaskItemWithNumbers(taskTitle = task)
+                RankedTaskItemCard(taskTitle = task)
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
@@ -154,42 +155,6 @@ fun PriorityTasksListScreen() {
                     fontSize = 20.sp
                 )
             }
-        }
-    }
-}
-
-@Composable
-@Override
-fun TaskItemWithNumbers(taskTitle: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Green),
-        colors = CardDefaults.cardColors(
-            containerColor = ContainerBackgroundColor
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = taskTitle,
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "#1",
-                color = TextGray,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Black
-            )
         }
     }
 }
