@@ -12,11 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.Blue
+
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
+import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Montserrat
+
 import kotlin.math.roundToInt
 
 @ExperimentalMaterial3Api
@@ -27,14 +30,18 @@ fun CustomSlider(
     modifier: Modifier = Modifier,
     valueRange: ClosedFloatingPointRange<Float> = 0f..10f,
     steps: Int = 9,
-    labels: List<Int> = (0..10).toList()
+    labels: List<String> = (0..10).map { it.toString() },
+    roundToInt: Boolean = true,
+    axisHorizontalPadding: Dp = 20.dp
 ) {
     Column(modifier = modifier) {
         Slider(
             value = value,
-            onValueChange = { onValueChange(it.roundToInt().toFloat()) },
+            onValueChange = {
+                onValueChange(if (roundToInt) it.roundToInt().toFloat() else it)
+            },
             valueRange = valueRange,
-            steps = steps - 1,
+            steps = steps,
             colors = SliderDefaults.colors(
                 thumbColor = Color.White,
                 activeTrackColor = Blue,
@@ -53,12 +60,12 @@ fun CustomSlider(
         )
 
         Row(
-            modifier = Modifier.padding(horizontal = 14.dp),
+            modifier = Modifier.padding(horizontal = axisHorizontalPadding),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             labels.forEach { label ->
                 Text(
-                    text = label.toString(),
+                    text = label,
                     color = Color.White,
                     fontSize = 12.sp,
                     fontFamily = Montserrat,

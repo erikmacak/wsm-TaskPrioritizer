@@ -1,6 +1,5 @@
 package com.erik.taskprioritizer.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,18 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,20 +22,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.ui.theme.BackgroundGray
-import com.erik.taskprioritizer.ui.theme.Blue
-import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
-import com.erik.taskprioritizer.ui.theme.Green
+
+import com.erik.taskprioritizer.ui.components.ExportPossibilities
+import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
+import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.TextGray
 
 @Composable
 fun PriorityTasksListScreen() {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    // State variable to hold the current search query
+    var searchQuery by remember { mutableStateOf("") }
 
+    // List of tasks to be displayed
     val tasks = listOf(
         "Fix landing page",
         "Share prototype with team",
@@ -56,6 +46,7 @@ fun PriorityTasksListScreen() {
         "Configure db connection"
     )
 
+    // Main column layout for the UI
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -63,93 +54,60 @@ fun PriorityTasksListScreen() {
             .padding(16.dp)
         ) {
 
-        //Introductory text
-        Text(
+        // Introductory text at the top of the screen
+        IntroductoryText(
             text = "Sorted By Priorities",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Search Bar
+        // Search bar for filtering tasks
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         ) {
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                placeholder = {
-                    Text(
-                        "Search",
-                        fontFamily = Montserrat,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = BackgroundGray,
-                    unfocusedContainerColor = BackgroundGray,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
-                ),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it }
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Selection between all tasks or priority tasks
+        // Row for selecting between all tasks and priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                "All",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterVertically))
+            // Button for selecting all tasks
+            SelectableTabButton(
+                text = "All",
+                selected = false,
+                onClick = { /* Navigace na TasksListScreen */ })
 
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Blue),
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    "Priorities",
-                    color = Color.White,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterVertically))
-            }
+            // Button for selecting priority tasks
+            SelectableTabButton(
+                text = "Priorities",
+                selected = true) { }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Each task displayed
+        // LazyColumn to display the list of priority tasks
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
             items(tasks) { task ->
-                TaskItemWithNumbers(taskTitle = task)
+                RankedTaskItemCard(taskTitle = task)
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
 
-        //Export possibilities
+        // Row for export possibilities
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -165,61 +123,7 @@ fun PriorityTasksListScreen() {
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
-                Text(
-                    text = "CSV",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
-
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
-                Text(
-                    text = "JSON",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
-        }
-    }
-}
-
-@Composable
-@Override
-fun TaskItemWithNumbers(taskTitle: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Green),
-        colors = CardDefaults.cardColors(
-            containerColor = ContainerBackgroundColor
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = taskTitle,
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "#1",
-                color = TextGray,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Black
-            )
+            ExportPossibilities()
         }
     }
 }

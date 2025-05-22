@@ -1,37 +1,28 @@
 package com.erik.taskprioritizer.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
-import com.erik.taskprioritizer.android.R
-import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
-import com.erik.taskprioritizer.ui.theme.BackgroundGray
-import com.erik.taskprioritizer.ui.theme.Blue
-import com.erik.taskprioritizer.ui.theme.Green
-import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.Orange
+
+import com.erik.taskprioritizer.ui.components.IconButtons
+import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.SelectableTabButton
+import com.erik.taskprioritizer.ui.components.TaskItemCard
+
 
 @Composable
 fun TaskListScreen() {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    // State variable to hold the current search query
+    var searchQuery by remember { mutableStateOf("") }
 
+    // List of tasks to be displayed
     val tasks = listOf(
         "Fix landing page",
         "Share prototype with team",
@@ -40,6 +31,7 @@ fun TaskListScreen() {
         "Configure db connection"
     )
 
+    // Main column layout for the UI
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,167 +39,66 @@ fun TaskListScreen() {
             .padding(16.dp)
     ) {
 
-        Text(
+        // Introductory text at the top of the screen
+        IntroductoryText(
             text = "Product Log - Tasks",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Search Bar
+        // Search bar for filtering tasks
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         ) {
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                placeholder = {
-                    Text(
-                        "Search",
-                        fontFamily = Montserrat,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White)
-                              },
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = BackgroundGray,
-                    unfocusedContainerColor = BackgroundGray,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
-                ),
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp)
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it }
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Selection between all tasks or priority tasks
+        // Row for selecting between all tasks and priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Blue),
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    "All",
-                    color = Color.White,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold)
-            }
-            Text(
-                "Priorities",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterVertically))
-        }
+            // Button for selecting all tasks
+            SelectableTabButton(
+                text = "All",
+                selected = true) { }
 
+            // Button for selecting priority tasks
+            SelectableTabButton(
+                text = "Priorities",
+                selected = false,
+                onClick = { /* Navigace na PriorityTasksListScreen */ })
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Each task displayed
+        // LazyColumn to display the list of tasks
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
             items(tasks) { task ->
-                TaskItem(taskTitle = task)
+                TaskItemCard(taskTitle = task)
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
 
-        //Icons with certain action
+        // Row for icon buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
         ) {
-            CenteredIconButtons()
+            IconButtons()
         }
-
-    }
-}
-
-@Composable
-fun TaskItem(taskTitle: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Green),
-        colors = CardDefaults.cardColors(
-            containerColor = ContainerBackgroundColor
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = taskTitle,
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold
-            )
-            Icon(
-                imageVector = Icons.Default.ArrowForward,
-                contentDescription = "Go to details",
-                tint = Color.White
-            )
-        }
-    }
-}
-
-@Composable
-fun CenteredIconButtons() {
-    Box(
-        modifier = Modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CircularIconButton(R.drawable.id_plus, "Add Task", Green)
-            CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange)
-            CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
-        }
-    }
-}
-
-@Composable
-fun CircularIconButton(iconId: Int, description: String, backgroundColor: Color) {
-    IconButton(
-        onClick = { /* TODO */ },
-        modifier = Modifier
-            .size(56.dp)
-            .background(color = backgroundColor, shape = CircleShape)
-            .padding(12.dp)
-    ) {
-        Image(
-            painter = painterResource(id = iconId),
-            contentDescription = description,
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
