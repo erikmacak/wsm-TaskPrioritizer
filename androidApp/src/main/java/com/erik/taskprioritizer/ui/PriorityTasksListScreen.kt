@@ -41,6 +41,7 @@ import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
+import com.erik.taskprioritizer.ui.components.ExportPossibilities
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
@@ -136,25 +137,7 @@ fun PriorityTasksListScreen() {
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
-                Text(
-                    text = "CSV",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
-
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
-                Text(
-                    text = "JSON",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
+            ExportPossibilities()
         }
     }
 }
