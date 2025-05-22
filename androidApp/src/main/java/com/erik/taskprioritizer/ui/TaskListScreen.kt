@@ -15,6 +15,7 @@ import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
+import com.erik.taskprioritizer.model.Task
 
 
 @Composable
@@ -22,14 +23,20 @@ fun TaskListScreen() {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // List of tasks to be displayed
-    val tasks = listOf(
-        "Fix landing page",
-        "Share prototype with team",
-        "Add unit tests",
-        "Add e2e tests",
-        "Configure db connection"
-    )
+    // Example task with dummy values
+    var tasks by remember {
+        mutableStateOf(
+            listOf(
+                Task(
+                    name = "Fix landing page",
+                    benefit = 4,
+                    complexity = 2,
+                    urgency = 3,
+                    risk = 1
+                )
+            )
+        )
+    }
 
     // Main column layout for the UI
     Column(
