@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.erik.taskprioritizer.android.R
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
@@ -77,23 +78,14 @@ fun TaskListScreen() {
                 .padding(horizontal = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Blue),
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    "All",
-                    color = Color.White,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold)
-            }
-            Text(
-                "Priorities",
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterVertically))
+            SelectableTabButton(
+                text = "All",
+                selected = true) { }
+
+            SelectableTabButton(
+                text = "Priorities",
+                selected = false,
+                onClick = { /* Navigace na PriorityTasksListScreen */ })
         }
 
 
