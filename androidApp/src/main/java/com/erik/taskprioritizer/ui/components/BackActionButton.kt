@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.erik.taskprioritizer.ui.theme.Blue
-import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
