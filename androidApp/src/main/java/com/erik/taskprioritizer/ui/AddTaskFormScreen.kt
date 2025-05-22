@@ -29,21 +29,25 @@ import com.erik.taskprioritizer.ui.components.SliderHeading
 @ExperimentalMaterial3Api
 @Composable
 fun AddTaskFormScreen () {
+    // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    var criteria = listOf(
+    // List of criteria
+    val criteria = listOf(
         "Benefit",
         "Complexity",
         "Urgency",
         "Risk"
     )
 
+    // State map to hold slider values for each criterion, initialized to 0
     val sliderValues = remember {
         mutableStateMapOf<String, Float>().apply {
             criteria.forEach{ put(it, 0f) }
         }
     }
 
+    // Main column layout for the UI
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -51,6 +55,7 @@ fun AddTaskFormScreen () {
             .padding(16.dp)
     ) {
 
+        // Introductory text at the top of the screen
         IntroductoryText(
             text = "Add Task",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -58,6 +63,7 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // Label for the task name input
         Text(
             text = "Task Name:",
             fontSize = 20.sp,
@@ -67,6 +73,7 @@ fun AddTaskFormScreen () {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
+        // Box for the search bar to input the task name
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +90,9 @@ fun AddTaskFormScreen () {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Create sliders for each criterion
         criteria.forEach { label ->
+            // Display the heading for the slider
             SliderHeading(label = label)
 
             CustomSlider(
@@ -94,7 +103,7 @@ fun AddTaskFormScreen () {
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        //Action buttons
+        // Action buttons for saving or going back
         Row(
             modifier = Modifier
                 .fillMaxWidth()
