@@ -1,6 +1,8 @@
 package com.erik.taskprioritizer.ui.components
 
+import com.erik.taskprioritizer.logic.calculateTaskScoring
 import com.erik.taskprioritizer.model.Task
+import com.erik.taskprioritizer.model.Weights
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -33,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
+import com.erik.taskprioritizer.ui.theme.Orange
+import com.erik.taskprioritizer.ui.theme.Red
 
 @Composable
 fun TaskItemCard(
@@ -54,7 +58,7 @@ fun TaskItemCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "", //task.getTitle,
+                text =  task.getTitle(),
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 modifier = Modifier.weight(1f)
@@ -88,8 +92,10 @@ fun TaskItemCard(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
+            val weights = Weights(benefit = 0.2f, complexity = 0.4f, urgency = 0.2f, risk = 0.2f)
+
             Text(
-                text = "PRIORITY SCORE: 0", //${calculateScore(task)}",
+                text = "PRIORITY SCORE: ${calculateTaskScoring(task, weights)}",
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 modifier = Modifier.padding(vertical = 4.dp)
@@ -100,10 +106,10 @@ fun TaskItemCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(onClick = onEditClick) {
-                    Text("EDIT", color = Color(0xFFFFA500)) // Orange
+                    Text("EDIT", color = Orange)
                 }
                 TextButton(onClick = onRemoveClick) {
-                    Text("REMOVE", color = Color.Red)
+                    Text("REMOVE", color = Red)
                 }
             }
         }
