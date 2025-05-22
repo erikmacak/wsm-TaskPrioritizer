@@ -94,7 +94,19 @@ fun TaskListScreen() {
             modifier = Modifier.weight(1f)
         ) {
             items(tasks) { task ->
-                TaskItemCard(taskTitle = task)
+                TaskItemCard(
+                    task = task,
+                    onExpandClick = {
+                        tasks = tasks.map {
+                            if (it.id == task.id) it.copy(isExpanded = !it.isExpanded) else it
+                        }
+                    },
+                    onEditClick = { /* Handle edit */ },
+                    onRemoveClick = {
+                        tasks = tasks.filterNot { it.id == task.id }
+                    }
+                )
+
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
