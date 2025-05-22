@@ -27,14 +27,17 @@ fun CustomSlider(
     modifier: Modifier = Modifier,
     valueRange: ClosedFloatingPointRange<Float> = 0f..10f,
     steps: Int = 9,
-    labels: List<Int> = (0..10).toList()
+    labels: List<String> = (0..10).map { it.toString() },
+    roundToInt: Boolean = true
 ) {
     Column(modifier = modifier) {
         Slider(
             value = value,
-            onValueChange = { onValueChange(it.roundToInt().toFloat()) },
+            onValueChange = {
+                onValueChange(if (roundToInt) it.roundToInt().toFloat() else it)
+            },
             valueRange = valueRange,
-            steps = steps - 1,
+            steps = steps,
             colors = SliderDefaults.colors(
                 thumbColor = Color.White,
                 activeTrackColor = Blue,
@@ -58,7 +61,7 @@ fun CustomSlider(
         ) {
             labels.forEach { label ->
                 Text(
-                    text = label.toString(),
+                    text = label,
                     color = Color.White,
                     fontSize = 12.sp,
                     fontFamily = Montserrat,
