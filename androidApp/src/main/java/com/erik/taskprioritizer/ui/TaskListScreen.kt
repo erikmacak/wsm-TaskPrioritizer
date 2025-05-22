@@ -1,39 +1,20 @@
 package com.erik.taskprioritizer.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
-import com.erik.taskprioritizer.android.R
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
 import com.erik.taskprioritizer.ui.components.IconButtons
-import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
-import com.erik.taskprioritizer.ui.theme.BackgroundGray
-import com.erik.taskprioritizer.ui.theme.Blue
-import com.erik.taskprioritizer.ui.theme.Green
-import com.erik.taskprioritizer.ui.theme.Montserrat
-import com.erik.taskprioritizer.ui.theme.Orange
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen() {
     var searchQuery by remember { mutableStateOf("") }
@@ -107,6 +88,5 @@ fun TaskListScreen() {
         ) {
             IconButtons()
         }
-
     }
 }
