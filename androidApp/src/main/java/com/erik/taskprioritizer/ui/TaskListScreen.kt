@@ -25,6 +25,7 @@ import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
+import com.erik.taskprioritizer.ui.components.IconButtons
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
@@ -99,49 +100,13 @@ fun TaskListScreen() {
             }
         }
 
-        //Icons with certain action
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
         ) {
-            CenteredIconButtons()
+            IconButtons()
         }
 
-    }
-}
-
-@Composable
-fun CenteredIconButtons() {
-    Box(
-        modifier = Modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CircularIconButton(R.drawable.id_plus, "Add Task", Green)
-            CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange)
-            CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
-        }
-    }
-}
-
-@Composable
-fun CircularIconButton(iconId: Int, description: String, backgroundColor: Color) {
-    IconButton(
-        onClick = { /* TODO */ },
-        modifier = Modifier
-            .size(56.dp)
-            .background(color = backgroundColor, shape = CircleShape)
-            .padding(12.dp)
-    ) {
-        Image(
-            painter = painterResource(id = iconId),
-            contentDescription = description,
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
