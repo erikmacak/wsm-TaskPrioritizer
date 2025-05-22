@@ -33,8 +33,10 @@ import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
 fun PriorityTasksListScreen() {
+    // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
+    // List of tasks to be displayed
     val tasks = listOf(
         "Fix landing page",
         "Share prototype with team",
@@ -43,6 +45,7 @@ fun PriorityTasksListScreen() {
         "Configure db connection"
     )
 
+    // Main column layout for the UI
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +53,7 @@ fun PriorityTasksListScreen() {
             .padding(16.dp)
         ) {
 
-        //Introductory text
+        // Introductory text at the top of the screen
         IntroductoryText(
             text = "Sorted By Priorities",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -58,7 +61,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Search Bar
+        // Search bar for filtering tasks
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,7 +75,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Selection between all tasks or priority tasks
+        // Row for selecting between all tasks and priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -93,7 +96,7 @@ fun PriorityTasksListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Each task displayed
+        // LazyColumn to display the list of priority tasks
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
@@ -103,7 +106,7 @@ fun PriorityTasksListScreen() {
             }
         }
 
-        //Export possibilities
+        // Row for export possibilities
         Row(
             modifier = Modifier
                 .fillMaxWidth()
