@@ -33,11 +33,13 @@ import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.TextGray
 import com.erik.taskprioritizer.ui.components.CustomSlider
+import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.SearchBar
 
 @ExperimentalMaterial3Api
 @Composable
 fun AddTaskFormScreen () {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    var searchQuery by remember { mutableStateOf("") }
 
     Column (
         modifier = Modifier
@@ -46,21 +48,13 @@ fun AddTaskFormScreen () {
             .padding(16.dp)
     ) {
 
-        //Introductory text
-        Text(
+        IntroductoryText(
             text = "Add Task",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Text and textfield element for task name
         Text(
             text = "Task Name:",
             fontSize = 20.sp,
@@ -70,32 +64,19 @@ fun AddTaskFormScreen () {
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
-        //Search bar
-        TextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            placeholder = {
-                Text(
-                    text = "Create PR",
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    color = TextGray
-                )
-            },
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = BackgroundGray,
-                unfocusedContainerColor = BackgroundGray,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
-            ),
-            singleLine = true,
-            shape = RoundedCornerShape(20.dp)
-        )
+                .padding(horizontal = 20.dp)
+                .padding(top = 8.dp)
+        ) {
+            SearchBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = { searchQuery = it },
+                textColor = TextGray,
+                placeholderValue = "Create PR"
+            )
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
