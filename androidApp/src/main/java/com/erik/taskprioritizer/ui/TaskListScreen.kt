@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.erik.taskprioritizer.android.R
+import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
@@ -47,15 +48,9 @@ fun TaskListScreen() {
             .padding(16.dp)
     ) {
 
-        Text(
+        IntroductoryText(
             text = "Product Log - Tasks",
-            fontSize = 24.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Black,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
