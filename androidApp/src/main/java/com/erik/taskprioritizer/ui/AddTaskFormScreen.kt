@@ -35,6 +35,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.BackActionButton
 
 @ExperimentalMaterial3Api
 @Composable
@@ -160,17 +161,9 @@ fun AddTaskFormScreen () {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = { /* TODO: zpět akce */ }) {
-                Text(
-                    text = "BACK",
-                    color = Blue,
-                    fontFamily = Montserrat,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
+            BackActionButton()
 
-            TextButton(onClick = { /* TODO: uložení akce */ }) {
+            TextButton(onClick = { /* uložení akce */ }) {
                 Text(
                     text = "SAVE",
                     color = Green,
