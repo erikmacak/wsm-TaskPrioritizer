@@ -1,6 +1,6 @@
-package repository
+package com.erik.taskprioritizer.repository
 
-import model.Weights
+import com.erik.taskprioritizer.model.Weights
 
 object WeightsRepository {
     private val weightsList = mutableListOf<Weights>()

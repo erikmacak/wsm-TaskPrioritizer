@@ -1,6 +1,6 @@
-package repository
+package com.erik.taskprioritizer.repository
 
-import model.Task
+import com.erik.taskprioritizer.model.Task
 
 object TaskRepository {
     private val taskList = mutableListOf<Task>()
@@ -18,7 +18,12 @@ object TaskRepository {
     }
 
     fun removeById(id: String) {
-        taskList.removeIf { it.id == id }
+        val iterator = taskList.iterator()
+        while (iterator.hasNext()) {
+            if (iterator.next().id == id) {
+                iterator.remove()
+            }
+        }
     }
 
     fun clear() {

@@ -1,4 +1,4 @@
-package model
+package com.erik.taskprioritizer.model
 
 data class Weights(
     val benefit: Float,

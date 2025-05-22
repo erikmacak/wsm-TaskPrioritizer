@@ -1,5 +1,7 @@
 package com.erik.taskprioritizer.ui.components
 
+import com.erik.taskprioritizer.model.Task
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -24,7 +26,9 @@ import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
-fun TaskItemCard(taskTitle: String) {
+fun TaskItemCard(
+    taskTitle: String
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -1,9 +1,9 @@
-package model
+package com.erik.taskprioritizer.model
 
-import java.util.UUID;
+import com.erik.taskprioritizer.util.generateUUID
 
 data class Task (
-    val id: String = UUID.randomUUID().ToString(),
+    val id: String = generateUUID(),
     val name: String,
     val benefit: Int,
     val complexity: Int,

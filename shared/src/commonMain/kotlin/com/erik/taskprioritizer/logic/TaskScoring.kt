@@ -1,7 +1,7 @@
-package logic
+package com.erik.taskprioritizer.logic
 
-import model.Task
-import model.Weights
+import com.erik.taskprioritizer.model.Task
+import com.erik.taskprioritizer.model.Weights
 
 object TaskScoring {
     fun calculate(task: Task, weights: Weights): Float {
