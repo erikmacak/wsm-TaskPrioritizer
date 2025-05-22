@@ -13,6 +13,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,6 +42,19 @@ import com.erik.taskprioritizer.ui.components.BackActionButton
 @Composable
 fun AddTaskFormScreen () {
     var searchQuery by remember { mutableStateOf("") }
+
+    var criteria = listOf(
+        "Benefit",
+        "Complexity",
+        "Urgency",
+        "Risk"
+    )
+
+    val sliderValues = remember {
+        mutableStateMapOf<String, Float>().apply {
+            criteria.forEach{ put(it, 0f) }
+        }
+    }
 
     Column (
         modifier = Modifier
