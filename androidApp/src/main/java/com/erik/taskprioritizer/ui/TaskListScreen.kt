@@ -17,8 +17,10 @@ import com.erik.taskprioritizer.ui.components.IconButtons
 
 @Composable
 fun TaskListScreen() {
+    // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
+    // List of tasks to be displayed
     val tasks = listOf(
         "Fix landing page",
         "Share prototype with team",
@@ -27,6 +29,7 @@ fun TaskListScreen() {
         "Configure db connection"
     )
 
+    // Main column layout for the UI
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,6 +37,7 @@ fun TaskListScreen() {
             .padding(16.dp)
     ) {
 
+        // Introductory text at the top of the screen
         IntroductoryText(
             text = "Product Log - Tasks",
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -41,6 +45,7 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // Search bar for filtering tasks
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,16 +59,19 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Row for selecting between all tasks and priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            // Button for selecting all tasks
             SelectableTabButton(
                 text = "All",
                 selected = true) { }
 
+            // Button for selecting priority tasks
             SelectableTabButton(
                 text = "Priorities",
                 selected = false,
@@ -72,6 +80,7 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // LazyColumn to display the list of tasks
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
@@ -81,6 +90,7 @@ fun TaskListScreen() {
             }
         }
 
+        // Row for icon buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
