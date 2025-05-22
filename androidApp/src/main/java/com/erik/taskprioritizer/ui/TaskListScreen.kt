@@ -24,6 +24,7 @@ import com.erik.taskprioritizer.android.R
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
+import com.erik.taskprioritizer.ui.components.TaskItemCard
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
@@ -71,7 +72,6 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Selection between all tasks or priority tasks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,15 +88,13 @@ fun TaskListScreen() {
                 onClick = { /* Navigace na PriorityTasksListScreen */ })
         }
 
-
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Each task displayed
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
             items(tasks) { task ->
-                TaskItem(taskTitle = task)
+                TaskItemCard(taskTitle = task)
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
@@ -110,40 +108,6 @@ fun TaskListScreen() {
             CenteredIconButtons()
         }
 
-    }
-}
-
-@Composable
-fun TaskItem(taskTitle: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Green),
-        colors = CardDefaults.cardColors(
-            containerColor = ContainerBackgroundColor
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = taskTitle,
-                color = Color.White,
-                fontFamily = Montserrat,
-                fontWeight = FontWeight.Bold
-            )
-            Icon(
-                imageVector = Icons.Default.ArrowForward,
-                contentDescription = "Go to details",
-                tint = Color.White
-            )
-        }
     }
 }
 
