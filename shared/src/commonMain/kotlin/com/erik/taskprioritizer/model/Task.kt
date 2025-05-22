@@ -10,4 +10,8 @@ data class Task (
     val urgency: Int,
     val risk: Int,
     var isExpanded: Boolean = false
-)
+) {
+    fun getTitle(): String {
+        return name
+    }
+}
