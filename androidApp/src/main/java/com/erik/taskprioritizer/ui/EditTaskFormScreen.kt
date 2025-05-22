@@ -34,6 +34,7 @@ import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
+import com.erik.taskprioritizer.ui.components.SliderHeading
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
@@ -99,78 +100,20 @@ fun EditTaskFormScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        //Text element and slider for each criterium
-        Text(
-            text = "Benefit: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
+        // Create sliders for each criterion
+        criteria.forEach { label ->
+            // Display the heading for the slider
+            SliderHeading(label = label)
 
-        var benefit by remember { mutableFloatStateOf(0f) }
+            CustomSlider(
+                value = sliderValues[label] ?: 0f,
+                onValueChange = { newValue -> sliderValues[label] = newValue }
+            )
 
-        CustomSlider(
-            value = benefit,
-            onValueChange = { benefit = it }
-        )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Complexity: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var complexity by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = complexity,
-            onValueChange = { complexity = it}
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Urgency: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var urgency by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = urgency,
-            onValueChange = { urgency = it}
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Benefit: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var risk by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = risk,
-            onValueChange = { risk = it}
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         //Action buttons
         Row(

@@ -103,6 +103,8 @@ fun AddTaskFormScreen () {
             Spacer(modifier = Modifier.height(20.dp))
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         // Action buttons for saving or going back
         Row(
             modifier = Modifier
