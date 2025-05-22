@@ -15,6 +15,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.components.IntroductoryText
+import com.erik.taskprioritizer.ui.components.SliderHeading
 import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
@@ -35,6 +37,21 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdjustWeightsScreen() {
+    // List of criteria
+    val criteria = listOf(
+        "Benefit",
+        "Complexity",
+        "Urgency",
+        "Risk"
+    )
+
+    // State map to hold slider values for each criterion, initialized to 0
+    val sliderValues = remember {
+        mutableStateMapOf<String, Float>().apply {
+            criteria.forEach{ put(it, 0f) }
+        }
+    }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -68,76 +85,22 @@ fun AdjustWeightsScreen() {
 
         Spacer(modifier = Modifier.height(36.dp))
 
-        //Text element and slider for each criterium
-        Text(
-            text = "Benefit: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
+        // Create sliders for each criterion
+        criteria.forEach { label ->
+            // Display the heading for the slider
+            SliderHeading(label = label)
 
-        var benefit by remember { mutableFloatStateOf(0f) }
+            CustomSlider(
+                value = sliderValues[label] ?: 0f,
+                onValueChange = { sliderValues[label] = it },
+                valueRange = 0f..1f,
+                labels = (0..10).map { (it / 10.0).toString() },
+                roundToInt = false,
+                axisHorizontalPadding = 18.dp
+            )
 
-        CustomSlider(
-            value = benefit,
-            onValueChange = { benefit = it }
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Complexity: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var complexity by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = complexity,
-            onValueChange = { complexity = it}
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Urgency: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var urgency by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = urgency,
-            onValueChange = { urgency = it}
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Benefit: ",
-            fontSize = 20.sp,
-            fontFamily = Montserrat,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-
-        var risk by remember { mutableFloatStateOf(0f) }
-
-        CustomSlider(
-            value = risk,
-            onValueChange = { risk = it}
-        )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
 
         Spacer(modifier = Modifier.height(32.dp))
 
