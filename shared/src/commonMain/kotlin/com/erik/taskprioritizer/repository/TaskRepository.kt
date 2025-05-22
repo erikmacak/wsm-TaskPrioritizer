@@ -2,7 +2,7 @@ package com.erik.taskprioritizer.repository
 
 import com.erik.taskprioritizer.model.Task
 
-object TaskRepository {
+class TaskRepository {
     private val taskList = mutableListOf<Task>()
 
     fun add(task: Task) {

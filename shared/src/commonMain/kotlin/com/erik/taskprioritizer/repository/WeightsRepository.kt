@@ -2,7 +2,7 @@ package com.erik.taskprioritizer.repository
 
 import com.erik.taskprioritizer.model.Weights
 
-object WeightsRepository {
+class WeightsRepository {
     private val weightsList = mutableListOf<Weights>()
 
     fun add(weights: Weights) {
