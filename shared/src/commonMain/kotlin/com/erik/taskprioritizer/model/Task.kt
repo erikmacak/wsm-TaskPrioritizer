@@ -14,4 +14,24 @@ data class Task (
     fun getTitle(): String {
         return name
     }
+
+    fun getId(): String {
+        return id;
+    }
+
+    fun getBenefit(): Int {
+        return benefit;
+    }
+
+    fun getComplexity(): Int {
+        return complexity;
+    }
+
+    fun getUrgency(): Int {
+        return urgency;
+    }
+
+    fun getRisk(): Int {
+        return risk;
+    }
 }
