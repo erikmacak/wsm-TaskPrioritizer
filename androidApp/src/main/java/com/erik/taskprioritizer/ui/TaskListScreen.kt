@@ -16,19 +16,39 @@ import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
 
+import com.erik.taskprioritizer.model.Task
+import com.erik.taskprioritizer.viewmodel.TaskViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.erik.taskprioritizer.model.Weights
+
 
 @Composable
-fun TaskListScreen() {
+fun TaskListScreen(taskViewModel: TaskViewModel = viewModel()) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // List of tasks to be displayed
-    val tasks = listOf(
-        "Fix landing page",
-        "Share prototype with team",
-        "Add unit tests",
-        "Add e2e tests",
-        "Configure db connection"
+    // Example task with dummy values
+    var tasks by remember {
+        mutableStateOf(
+            listOf(
+                Task(
+                    id = "d52a4216-0acc-43d7-ba00-d3ffdeecc59b",
+                    name = "Fix landing page",
+                    benefit = 4,
+                    complexity = 2,
+                    urgency = 3,
+                    risk = 1
+                )
+            )
+        )
+    }
+
+    // Initialize weights for task scoring
+    var weights = Weights(
+        urgency = 0.25f,
+        risk = 0.2f,
+        complexity = 0.3f,
+        benefit = 0.25f
     )
 
     // Main column layout for the UI
@@ -82,12 +102,16 @@ fun TaskListScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // LazyColumn to display the list of tasks
-        LazyColumn(
-            modifier = Modifier.weight(1f)
-        ) {
+        LazyColumn {
             items(tasks) { task ->
-                TaskItemCard(taskTitle = task)
+                TaskItemCard(
+                    task = task,
+                    isExpanded = taskViewModel.isExpanded(task.getId()),
+                    onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
+                    onEditClick = { /* ... */ },
+                    onRemoveClick = { /* ... */ },
+                    weights = weights
+                )
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
