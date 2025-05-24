@@ -13,6 +13,7 @@ class TaskRepository {
         return taskList.toList()
     }
 
+    /*
     fun findById(id: String): Task? {
         return taskList.find { it.id == id }
     }
@@ -25,6 +26,7 @@ class TaskRepository {
             }
         }
     }
+     */
 
     fun clear() {
         taskList.clear()
