@@ -1,11 +1,7 @@
 package com.erik.taskprioritizer.ui.components
 
-import com.erik.taskprioritizer.logic.calculateTaskScoring
-import com.erik.taskprioritizer.model.Task
-import com.erik.taskprioritizer.model.Weights
-
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,101 +11,167 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 import com.erik.taskprioritizer.ui.theme.ContainerBackgroundColor
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
+
+import com.erik.taskprioritizer.model.Task
+
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.Divider
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.logic.calculateTaskScoring
+import com.erik.taskprioritizer.model.Weights
+import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.Red
+import com.erik.taskprioritizer.ui.theme.TextGray
 
 @Composable
 fun TaskItemCard(
     task: Task,
+    isExpanded: Boolean,
     onExpandClick: () -> Unit,
     onEditClick: () -> Unit,
     onRemoveClick: () -> Unit,
+    weights: Weights
 ) {
-    Column(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-            .border(1.dp, Color.Green, RoundedCornerShape(10.dp))
-            .padding(12.dp)
+            .padding(horizontal = 16.dp)
+            .animateContentSize(),
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(1.dp, Green),
+        colors = CardDefaults.cardColors(
+            containerColor = ContainerBackgroundColor
+        )
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+        Column (
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
-            Text(
-                text =  task.getTitle(),
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.weight(1f)
-            )
-
-            IconButton(onClick = onExpandClick) {
-                Icon(
-                    imageVector = if (task.isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                    contentDescription = null,
-                    tint = Color.White
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = task.getTitle(),
+                    color = Color.White,
+                    fontFamily = Montserrat,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.CenterVertically)
                 )
-            }
-        }
 
-        if (task.isExpanded) {
-            Text(text = task.id, fontSize = 12.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column {
-                    Text("Benefit: ${task.benefit}", color = Color.White)
-                    Text("Complexity: ${task.complexity}", color = Color.White)
-                }
-                Column {
-                    Text("Urgency: ${task.urgency}", color = Color.White)
-                    Text("Risk: ${task.risk}", color = Color.White)
+                IconButton(onClick = onExpandClick) {
+                    Icon(
+                        imageVector = if (isExpanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowRight,
+                        contentDescription = "Expand",
+                        tint = Color.White
+                    )
                 }
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-            val weights = Weights(benefit = 0.2f, complexity = 0.4f, urgency = 0.2f, risk = 0.2f)
 
             Text(
-                text = "PRIORITY SCORE: ${calculateTaskScoring(task, weights)}",
+                text = "PS: " + calculateTaskScoring(task, weights),
+                color = TextGray,
+                fontFamily = Montserrat,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.padding(vertical = 4.dp)
+                fontSize = 12.sp
             )
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextButton(onClick = onEditClick) {
-                    Text("EDIT", color = Orange)
+            if (isExpanded) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = task.getId(),
+                    color = TextGray,
+                    fontSize = 15.sp
+                )
+
+                Row() {
+                    Text(
+                        text = "Benefit: " + task.getBenefit().toString(),
+                        color = Color.White,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.padding(horizontal = 34.dp))
+
+                    Text(
+                        text = "Urgency: " + task.getUrgency().toString(),
+                        color = Color.White,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-                TextButton(onClick = onRemoveClick) {
-                    Text("REMOVE", color = Red)
+
+                Row() {
+                    Text(
+                        text = "Complexity: " + task.getComplexity().toString(),
+                        color = Color.White,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.padding(horizontal = 18.dp))
+
+                    Text(
+                        text = "Risk: " + task.getRisk().toString(),
+                        color = Color.White,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Divider(
+                    color = BackgroundGray,
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Edit",
+                        color = Orange,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.clickable { /* onEdit */ }
+                    )
+
+                    Text(
+                        text = "Remove",
+                        color = Red,
+                        fontFamily = Montserrat,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.clickable { /* onRemove */ }
+                    )
                 }
             }
         }
