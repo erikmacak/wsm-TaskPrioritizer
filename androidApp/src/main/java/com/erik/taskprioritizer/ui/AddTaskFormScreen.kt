@@ -30,7 +30,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @ExperimentalMaterial3Api
 @Composable
-fun AddTaskFormScreen () {
+fun AddTaskFormScreen (onBackClick: () -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -113,7 +113,7 @@ fun AddTaskFormScreen () {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            BackActionButton()
+            BackActionButton(onBackClick = onBackClick)
 
             TextButton(onClick = { /* uložení akce */ }) {
                 Text(

@@ -33,7 +33,7 @@ import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
-fun PriorityTasksListScreen() {
+fun PriorityTasksListScreen(onAllClick: () -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -87,7 +87,7 @@ fun PriorityTasksListScreen() {
             SelectableTabButton(
                 text = "All",
                 selected = false,
-                onClick = { /* Navigace na TasksListScreen */ })
+                onClick = onAllClick)
 
             // Button for selecting priority tasks
             SelectableTabButton(

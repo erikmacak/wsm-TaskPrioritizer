@@ -23,7 +23,12 @@ import com.erik.taskprioritizer.model.Weights
 
 
 @Composable
-fun TaskListScreen(taskViewModel: TaskViewModel = viewModel()) {
+fun TaskListScreen(
+    taskViewModel: TaskViewModel = viewModel(),
+    onEditClick: () -> Unit,
+    onPrioritiesClick: () -> Unit,
+    onAddTaskClick: () -> Unit,
+    onAdjustWeightsClick: () -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -97,7 +102,7 @@ fun TaskListScreen(taskViewModel: TaskViewModel = viewModel()) {
             SelectableTabButton(
                 text = "Priorities",
                 selected = false,
-                onClick = { /* Navigace na PriorityTasksListScreen */ })
+                onClick = onPrioritiesClick)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -108,7 +113,7 @@ fun TaskListScreen(taskViewModel: TaskViewModel = viewModel()) {
                     task = task,
                     isExpanded = taskViewModel.isExpanded(task.getId()),
                     onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
-                    onEditClick = { /* ... */ },
+                    onEditClick = onEditClick,
                     onRemoveClick = { /* ... */ },
                     weights = weights
                 )
@@ -122,7 +127,7 @@ fun TaskListScreen(taskViewModel: TaskViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
         ) {
-            IconButtons()
+            IconButtons(onAddTaskCLick = onAddTaskClick, onAdjustWeightsClick = onAdjustWeightsClick)
         }
     }
 }
