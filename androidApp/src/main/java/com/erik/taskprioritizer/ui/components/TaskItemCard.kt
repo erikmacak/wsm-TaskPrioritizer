@@ -162,7 +162,7 @@ fun TaskItemCard(
                         color = Orange,
                         fontFamily = Montserrat,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable { /* onEdit */ }
+                        modifier = Modifier.clickable { onEditClick() }
                     )
 
                     Text(

@@ -34,7 +34,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdjustWeightsScreen() {
+fun AdjustWeightsScreen(onBackClick: () -> Unit) {
     // List of criteria
     val criteria = listOf(
         "Benefit",
@@ -110,7 +110,7 @@ fun AdjustWeightsScreen() {
                 .padding(horizontal = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            BackActionButton()
+            BackActionButton(onBackClick = onBackClick)
 
             TextButton(onClick = { /* uložení akce */ }) {
                 Text(

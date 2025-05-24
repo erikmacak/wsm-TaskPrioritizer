@@ -10,8 +10,8 @@ import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
-fun BackActionButton() {
-    TextButton(onClick = { /* zpět akce */ }) {
+fun BackActionButton(onBackClick: () -> Unit) {
+    TextButton(onClick = onBackClick) {
         Text(
             text = "BACK",
             color = Blue,

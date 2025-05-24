@@ -24,7 +24,10 @@ import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Orange
 
 @Composable
-fun IconButtons() {
+fun IconButtons(
+    onAddTaskCLick: () -> Unit,
+    onAdjustWeightsClick: () -> Unit
+) {
     Box(
         modifier = Modifier,
         contentAlignment = Alignment.Center
@@ -34,17 +37,17 @@ fun IconButtons() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularIconButton(R.drawable.id_plus, "Add Task", Green)
-            CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange)
-            CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
+            CircularIconButton(R.drawable.id_plus, "Add Task", Green, onAddTaskCLick)
+            CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange, onAdjustWeightsClick)
+            //CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
         }
     }
 }
 
 @Composable
-fun CircularIconButton(iconId: Int, description: String, backgroundColor: Color) {
+fun CircularIconButton(iconId: Int, description: String, backgroundColor: Color, onClick: () -> Unit) {
     IconButton(
-        onClick = { /* TODO */ },
+        onClick = onClick,
         modifier = Modifier
             .size(56.dp)
             .background(color = backgroundColor, shape = CircleShape)
