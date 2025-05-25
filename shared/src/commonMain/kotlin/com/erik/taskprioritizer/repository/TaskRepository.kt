@@ -20,6 +20,29 @@ class TaskRepository {
         return taskList.toList()
     }
 
+    fun getAllRanked(): List<Task> {
+        val sortedTasks = taskList.sortedByDescending { it.getPriorityScore() }
+
+        var currentRank = 1
+        var previousScore: Float? = null
+        var sameRankCount = 0
+
+        return sortedTasks.mapIndexed { index, task ->
+            val rank = if (task.getPriorityScore() == previousScore) {
+                currentRank
+            } else {
+                currentRank + sameRankCount
+            }
+
+            sameRankCount = if (task.getPriorityScore() == previousScore) sameRankCount + 1 else 1
+            previousScore = task.getPriorityScore()
+            currentRank = rank
+
+            task.copy(rank = rank)
+        }
+    }
+
+
     fun findById(id: String): Task? {
         return taskList.find {it.getId() == id}
     }
