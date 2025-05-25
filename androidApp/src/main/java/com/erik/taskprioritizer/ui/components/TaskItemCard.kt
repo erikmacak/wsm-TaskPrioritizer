@@ -39,7 +39,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.erik.taskprioritizer.logic.calculateTaskScoring
-import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.Red
@@ -52,7 +51,6 @@ fun TaskItemCard(
     onExpandClick: () -> Unit,
     onEditClick: () -> Unit,
     onRemoveClick: () -> Unit,
-    weights: Weights
 ) {
     Card(
         modifier = Modifier
@@ -92,7 +90,7 @@ fun TaskItemCard(
             }
 
             Text(
-                text = "PS: " + calculateTaskScoring(task, weights),
+                text = "PS: " + task.getPriorityScore(),
                 color = TextGray,
                 fontFamily = Montserrat,
                 fontWeight = FontWeight.Bold,
