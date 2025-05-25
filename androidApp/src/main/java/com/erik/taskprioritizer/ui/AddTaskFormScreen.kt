@@ -30,7 +30,9 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @ExperimentalMaterial3Api
 @Composable
-fun AddTaskFormScreen (onBackClick: () -> Unit) {
+fun AddTaskFormScreen (
+    onBackClick: () -> Unit,
+    onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -115,7 +117,7 @@ fun AddTaskFormScreen (onBackClick: () -> Unit) {
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { /* uložení akce */ }) {
+            TextButton(onClick = { onSaveClick(searchQuery, sliderValues.toMap()) } ) {
                 Text(
                     text = "SAVE",
                     color = Green,
