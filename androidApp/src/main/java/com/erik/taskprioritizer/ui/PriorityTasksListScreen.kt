@@ -31,20 +31,17 @@ import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.Montserrat
+import com.erik.taskprioritizer.viewmodel.TaskViewModel
 
 @Composable
-fun PriorityTasksListScreen(onAllClick: () -> Unit) {
+fun PriorityTasksListScreen(
+    taskViewModel: TaskViewModel,
+    onAllClick: () -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // List of tasks to be displayed
-    val tasks = listOf(
-        "Fix landing page",
-        "Share prototype with team",
-        "Add unit tests",
-        "Add e2e tests",
-        "Configure db connection"
-    )
+    //
+    val rankedTasks = taskViewModel.getRankedTasks()
 
     // Main column layout for the UI
     Column (
@@ -101,8 +98,8 @@ fun PriorityTasksListScreen(onAllClick: () -> Unit) {
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
-            items(tasks) { task ->
-                RankedTaskItemCard(taskTitle = task)
+            items(rankedTasks) { task ->
+                RankedTaskItemCard(taskTitle = task.getTitle(), taskRank = task.getRank())
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
