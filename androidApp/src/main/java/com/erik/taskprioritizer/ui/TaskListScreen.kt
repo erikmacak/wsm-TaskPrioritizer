@@ -35,7 +35,15 @@ fun TaskListScreen(
     var searchQuery by remember { mutableStateOf("") }
 
     //
-    val tasks = taskViewModel.getTasks()
+    val tasks by remember(searchQuery, taskViewModel) {
+        derivedStateOf {
+            if (searchQuery.isNotBlank()) {
+                taskViewModel.getTasksByName(searchQuery)
+            } else {
+                taskViewModel.getTasks()
+            }
+        }
+    }
 
     //
     val weights = weightsViewModel.getWeights()
