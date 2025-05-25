@@ -9,7 +9,9 @@ data class Task (
     private val complexity: Int,
     private val urgency: Int,
     private val risk: Int,
-    private var isExpanded: Boolean = false
+    private var isExpanded: Boolean = false,
+    private var priorityScore: Float = 0f,
+    private var rank: Int = 0
 ) {
     fun getTitle(): String {
         return name
@@ -33,5 +35,9 @@ data class Task (
 
     fun getRisk(): Int {
         return risk;
+    }
+
+    fun getPriorityScore(): Float {
+        return priorityScore;
     }
 }
