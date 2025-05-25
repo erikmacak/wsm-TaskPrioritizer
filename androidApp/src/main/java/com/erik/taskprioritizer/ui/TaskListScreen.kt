@@ -27,7 +27,7 @@ import com.erik.taskprioritizer.model.Weights
 fun TaskListScreen(
     taskViewModel: TaskViewModel,
     weightsViewModel: WeightsViewModel,
-    onEditClick: () -> Unit,
+    onEditClick: (taskId: String) -> Unit,
     onPrioritiesClick: () -> Unit,
     onAddTaskClick: () -> Unit,
     onAdjustWeightsClick: () -> Unit) {
@@ -97,7 +97,7 @@ fun TaskListScreen(
                     task = task,
                     isExpanded = taskViewModel.isExpanded(task.getId()),
                     onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
-                    onEditClick = onEditClick,
+                    onEditClick =  { onEditClick(task.getId()) },
                     onRemoveClick = { /* ... */ },
                     weights = weights
                 )
