@@ -71,7 +71,9 @@ fun AppNavigation() {
                                 urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
                                 risk = (criteriaValues["Risk"] ?: 0f).toInt()
                             )
-                            taskViewModel.updateTask(updatedTask)
+                            val priorityScore = taskViewModel.calculatePriorityScore(updatedTask, weightsViewModel.getWeights())
+                            val finalTask = updatedTask.copy(priorityScore = priorityScore)
+                            taskViewModel.updateTask(finalTask)
                         }
                         navController.popBackStack()
                     }
@@ -111,7 +113,9 @@ fun AppNavigation() {
                         urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
                         risk = (criteriaValues["Risk"] ?: 0f).toInt()
                     )
-                    taskViewModel.addTask(task)
+                    val priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
+                    val finalTask = task.copy(priorityScore = priorityScore)
+                    taskViewModel.addTask(finalTask)
                     navController.popBackStack()
                 }
             )
