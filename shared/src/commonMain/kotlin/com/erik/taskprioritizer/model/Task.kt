@@ -37,6 +37,10 @@ data class Task (
         return risk;
     }
 
+    fun setPriorityScore(score: Float) {
+        priorityScore = score;
+    }
+
     fun getPriorityScore(): Float {
         return priorityScore;
     }
