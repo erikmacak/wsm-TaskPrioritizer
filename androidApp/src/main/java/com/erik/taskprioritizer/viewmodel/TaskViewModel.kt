@@ -2,6 +2,7 @@ package com.erik.taskprioritizer.viewmodel
 
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
+import com.erik.taskprioritizer.logic.calculateTaskScoring
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.repository.TaskRepository
@@ -19,6 +20,8 @@ class TaskViewModel: ViewModel() {
     fun getTaskById(id: String): Task? = taskRepo.findById(id)
 
     fun removeTask(id: String) = taskRepo.removeById(id)
+
+    fun calculatePriorityScore(task: Task, weights: Weights): Float = calculateTaskScoring(task, weights)
 
     fun clearTasks() = taskRepo.clear()
 
