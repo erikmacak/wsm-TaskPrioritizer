@@ -94,6 +94,7 @@ fun AppNavigation() {
 
         composable(NavigationDestination.PriorityTaskList.route) {
             PriorityTasksListScreen(
+                taskViewModel = taskViewModel,
                 onAllClick = {
                     navController.navigate(NavigationDestination.TaskList.route)
                 }
