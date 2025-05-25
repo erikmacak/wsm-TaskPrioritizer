@@ -170,7 +170,7 @@ fun TaskItemCard(
                         color = Red,
                         fontFamily = Montserrat,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable { /* onRemove */ }
+                        modifier = Modifier.clickable { onRemoveClick() }
                     )
                 }
             }
