@@ -3,6 +3,7 @@ package com.erik.taskprioritizer.navigation
 import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -35,6 +36,9 @@ fun AppNavigation() {
                 weightsViewModel = weightsViewModel,
                 onEditClick = { taskId ->
                     navController.navigate("${NavigationDestination.EditTask.route}/$taskId")
+                },
+                onRemoveClick = { taskId ->
+                    navController.navigate("${NavigationDestination.RemoveTask.route}/$taskId")
                 },
                 onPrioritiesClick = {
                     navController.navigate(NavigationDestination.PriorityTaskList.route)
@@ -72,6 +76,17 @@ fun AppNavigation() {
                         navController.popBackStack()
                     }
                 )
+            }
+        }
+
+        composable("${NavigationDestination.RemoveTask.route}/{taskId}") { backStackEntry ->
+            val taskId = backStackEntry.arguments?.getString("taskId")
+            
+            LaunchedEffect(taskId) {
+                if (taskId != null) {
+                    taskViewModel.removeTask(taskId)
+                    navController.popBackStack()
+                }
             }
         }
 
