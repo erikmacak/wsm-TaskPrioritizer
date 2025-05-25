@@ -28,6 +28,7 @@ fun TaskListScreen(
     taskViewModel: TaskViewModel,
     weightsViewModel: WeightsViewModel,
     onEditClick: (taskId: String) -> Unit,
+    onRemoveClick: (taskId: String) -> Unit,
     onPrioritiesClick: () -> Unit,
     onAddTaskClick: () -> Unit,
     onAdjustWeightsClick: () -> Unit) {
@@ -98,7 +99,7 @@ fun TaskListScreen(
                     isExpanded = taskViewModel.isExpanded(task.getId()),
                     onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
                     onEditClick =  { onEditClick(task.getId()) },
-                    onRemoveClick = { /* ... */ },
+                    onRemoveClick = { onRemoveClick(task.getId()) },
                     weights = weights
                 )
                 Spacer(modifier = Modifier.height(24.dp))
