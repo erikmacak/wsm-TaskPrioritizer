@@ -34,7 +34,9 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdjustWeightsScreen(onBackClick: () -> Unit) {
+fun AdjustWeightsScreen(
+    onBackClick: () -> Unit,
+    onAdjustClick: (Map<String, Float>) -> Unit) {
     // List of criteria
     val criteria = listOf(
         "Benefit",
@@ -112,7 +114,7 @@ fun AdjustWeightsScreen(onBackClick: () -> Unit) {
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { /* uložení akce */ }) {
+            TextButton(onClick = { onAdjustClick(sliderValues.toMap()) }) {
                 Text(
                     text = "ADJUST",
                     color = Green,
