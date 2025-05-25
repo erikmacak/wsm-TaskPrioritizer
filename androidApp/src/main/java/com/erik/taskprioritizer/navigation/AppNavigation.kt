@@ -15,6 +15,7 @@ import com.erik.taskprioritizer.ui.EditTaskFormScreen
 import com.erik.taskprioritizer.ui.PriorityTasksListScreen
 
 import com.erik.taskprioritizer.model.Task
+import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.repository.TaskRepository
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
@@ -126,6 +127,22 @@ fun AppNavigation() {
             AdjustWeightsScreen(
                 onBackClick = {
                     navController.navigate(NavigationDestination.TaskList.route)
+                },
+                onAdjustClick = { weightsValues ->
+                    val urgency: Float = weightsValues["Urgency"] ?: 0f
+                    val risk: Float = weightsValues["Risk"] ?: 0f
+                    val complexity: Float = weightsValues["Complexity"] ?: 0f
+                    val benefit: Float = weightsValues["Benefit"] ?: 0f
+
+                    val newWeightsValues: Weights = Weights(benefit, complexity, urgency, risk)
+                    weightsViewModel.updateWeights(newWeightsValues)
+
+                    val updateTask = taskViewModel.getTasks().map { task ->
+                        val updatedPriorityScore = taskViewModel.calculatePriorityScore(task, newWeightsValues)
+                        task.setPriorityScore(updatedPriorityScore)
+                    }
+
+                    navController.popBackStack()
                 }
             )
         }
