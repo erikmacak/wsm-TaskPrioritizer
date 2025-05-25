@@ -42,6 +42,12 @@ class TaskRepository {
         }
     }
 
+    fun getAllByName(name: String): List<Task> {
+        return taskList.filter { task ->
+            task.getTitle().contains(name, ignoreCase = true)
+        }
+    }
+
 
     fun findById(id: String): Task? {
         return taskList.find {it.getId() == id}
