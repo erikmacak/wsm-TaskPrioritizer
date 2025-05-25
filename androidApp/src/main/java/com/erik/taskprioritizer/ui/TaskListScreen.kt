@@ -20,7 +20,6 @@ import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.erik.taskprioritizer.model.Weights
 
 
 @Composable
@@ -100,7 +99,6 @@ fun TaskListScreen(
                     onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
                     onEditClick =  { onEditClick(task.getId()) },
                     onRemoveClick = { onRemoveClick(task.getId()) },
-                    weights = weights
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
