@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.model.Task
 
 import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
@@ -38,7 +39,10 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @ExperimentalMaterial3Api
 @Composable
-fun EditTaskFormScreen(onBackClick: () -> Unit) {
+fun EditTaskFormScreen(
+    task: Task?,
+    onBackClick: () -> Unit,
+    onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -123,7 +127,7 @@ fun EditTaskFormScreen(onBackClick: () -> Unit) {
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { /* upravení úkolu */ }) {
+            TextButton(onClick = { onSaveClick(searchQuery, sliderValues.toMap()) } ) {
                 Text(
                     text = "EDIT",
                     color = Green,
