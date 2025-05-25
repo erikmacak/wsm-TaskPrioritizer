@@ -18,13 +18,15 @@ import com.erik.taskprioritizer.ui.components.TaskItemCard
 
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
+import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.erik.taskprioritizer.model.Weights
 
 
 @Composable
 fun TaskListScreen(
-    taskViewModel: TaskViewModel = viewModel(),
+    taskViewModel: TaskViewModel,
+    weightsViewModel: WeightsViewModel,
     onEditClick: () -> Unit,
     onPrioritiesClick: () -> Unit,
     onAddTaskClick: () -> Unit,
@@ -32,29 +34,11 @@ fun TaskListScreen(
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // Example task with dummy values
-    var tasks by remember {
-        mutableStateOf(
-            listOf(
-                Task(
-                    id = "d52a4216-0acc-43d7-ba00-d3ffdeecc59b",
-                    name = "Fix landing page",
-                    benefit = 4,
-                    complexity = 2,
-                    urgency = 3,
-                    risk = 1
-                )
-            )
-        )
-    }
+    //
+    val tasks = taskViewModel.getTasks()
 
-    // Initialize weights for task scoring
-    var weights = Weights(
-        urgency = 0.25f,
-        risk = 0.2f,
-        complexity = 0.3f,
-        benefit = 0.25f
-    )
+    //
+    val weights = weightsViewModel.getWeights()
 
     // Main column layout for the UI
     Column(
