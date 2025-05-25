@@ -21,6 +21,8 @@ class TaskViewModel: ViewModel() {
 
     fun getTasksByName(name: String) = taskRepo.getAllByName(name)
 
+    fun getRankedTasksByName(name: String) = taskRepo.getAllRankedByName(name)
+
     fun getTaskById(id: String): Task? = taskRepo.findById(id)
 
     fun removeTask(id: String) = taskRepo.removeById(id)

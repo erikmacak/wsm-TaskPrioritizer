@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +42,17 @@ fun PriorityTasksListScreen(
     var searchQuery by remember { mutableStateOf("") }
 
     //
-    val rankedTasks = taskViewModel.getRankedTasks()
+    //val rankedTasks = taskViewModel.getRankedTasks()
+
+    val rankedTasks by remember(searchQuery, taskViewModel) {
+        derivedStateOf {
+            if (searchQuery.isNotBlank()) {
+                taskViewModel.getRankedTasksByName(searchQuery)
+            } else {
+                taskViewModel.getRankedTasks()
+            }
+        }
+    }
 
     // Main column layout for the UI
     Column (
