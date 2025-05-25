@@ -22,7 +22,7 @@ import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.TextGray
 
 @Composable
-fun RankedTaskItemCard(taskTitle: String) {
+fun RankedTaskItemCard(taskTitle: String, taskRank: Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +47,7 @@ fun RankedTaskItemCard(taskTitle: String) {
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "#1",
+                text = "#" + taskRank.toString(),
                 color = TextGray,
                 fontFamily = Montserrat,
                 fontWeight = FontWeight.Black
