@@ -48,6 +48,12 @@ class TaskRepository {
         }
     }
 
+    fun getAllRankedByName(name: String): List<Task> {
+        return getAllRanked().filter { task ->
+            task.getTitle().contains(name, ignoreCase = true)
+        }
+    }
+
 
     fun findById(id: String): Task? {
         return taskList.find {it.getId() == id}
