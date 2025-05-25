@@ -40,4 +40,8 @@ data class Task (
     fun getPriorityScore(): Float {
         return priorityScore;
     }
+
+    fun getRank(): Int {
+        return rank;
+    }
 }
