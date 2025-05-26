@@ -99,7 +99,9 @@ fun TaskListScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LazyColumn {
+        LazyColumn (
+            modifier = Modifier.weight(1f)
+        ) {
             items(tasks) { task ->
                 TaskItemCard(
                     task = task,
