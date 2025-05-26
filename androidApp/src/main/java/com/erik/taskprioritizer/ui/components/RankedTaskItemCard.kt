@@ -47,7 +47,7 @@ fun RankedTaskItemCard(taskTitle: String, taskRank: Int) {
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "#" + taskRank.toString(),
+                text = "#$taskRank",
                 color = TextGray,
                 fontFamily = Montserrat,
                 fontWeight = FontWeight.Black

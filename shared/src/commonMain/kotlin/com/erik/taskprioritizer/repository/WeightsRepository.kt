@@ -1,13 +1,11 @@
 package com.erik.taskprioritizer.repository
 
-import com.erik.taskprioritizer.model.Weights
-
 object WeightsRepository {
     private var weightsList: Map<String, Float> = mapOf(
-        "Urgency" to 0.25f,
-        "Risk" to 0.2f,
+        "Benefit" to 0.3f,
         "Complexity" to 0.3f,
-        "Benefit" to 0.25f
+        "Urgency" to 0.2f,
+        "Risk" to 0.2f,
     )
 
     fun getAll(): Map<String, Float> = weightsList

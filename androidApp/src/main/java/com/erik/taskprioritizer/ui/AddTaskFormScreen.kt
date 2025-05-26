@@ -32,7 +32,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @Composable
 fun AddTaskFormScreen (
     onBackClick: () -> Unit,
-    onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
+    onAddClick: (taskName: String, Map<String, Float>) -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -99,7 +99,7 @@ fun AddTaskFormScreen (
             SliderHeading(label = label)
 
             CustomSlider(
-                value = sliderValues[label] ?: 0f,
+                value = sliderValues[label]!!,
                 onValueChange = { newValue -> sliderValues[label] = newValue }
             )
 
@@ -117,7 +117,7 @@ fun AddTaskFormScreen (
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { onSaveClick(searchQuery, sliderValues.toMap()) } ) {
+            TextButton(onClick = { onAddClick(searchQuery, sliderValues.toMap()) } ) {
                 Text(
                     text = "SAVE",
                     color = Green,

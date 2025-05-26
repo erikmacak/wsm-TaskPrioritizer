@@ -31,14 +31,15 @@ fun AppNavigation() {
         composable(NavigationDestination.TaskList.route) {
             TaskListScreen (
                 taskViewModel = taskViewModel,
+                onPrioritiesClick = {
+                    navController.navigate(NavigationDestination.PriorityTaskList.route)
+                },
                 onEditClick = { taskId ->
+
                     navController.navigate(NavigationDestination.EditTask.withId(taskId))
                 },
                 onRemoveClick = { taskId ->
                     navController.navigate(NavigationDestination.RemoveTask.withId(taskId))
-                },
-                onPrioritiesClick = {
-                    navController.navigate(NavigationDestination.PriorityTaskList.route)
                 },
                 onAddTaskClick = {
                     navController.navigate(NavigationDestination.AddTask.route)
@@ -101,7 +102,7 @@ fun AppNavigation() {
                 onBackClick = {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
-                onSaveClick = { taskName, criteriaValues ->
+                onAddClick = { taskName, criteriaValues ->
                     val task = Task(
                         title = taskName,
                         benefit = (criteriaValues["Benefit"]!!).toInt(),

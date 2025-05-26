@@ -17,14 +17,13 @@ import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
 
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
-import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 
 @Composable
 fun TaskListScreen(
     taskViewModel: TaskViewModel,
+    onPrioritiesClick: () -> Unit,
     onEditClick: (taskId: String) -> Unit,
     onRemoveClick: (taskId: String) -> Unit,
-    onPrioritiesClick: () -> Unit,
     onAddTaskClick: () -> Unit,
     onAdjustWeightsClick: () -> Unit) {
     // State variable to hold the current search query
@@ -111,7 +110,7 @@ fun TaskListScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 24.dp)
         ) {
             IconButtons(onAddTaskCLick = onAddTaskClick, onAdjustWeightsClick = onAdjustWeightsClick)
         }

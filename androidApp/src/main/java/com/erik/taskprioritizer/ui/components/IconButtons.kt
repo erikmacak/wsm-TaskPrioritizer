@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 import com.erik.taskprioritizer.android.R
-import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Orange
 
@@ -30,12 +29,12 @@ fun IconButtons(
 ) {
     Box(
         modifier = Modifier,
-        contentAlignment = Alignment.Center
+        //contentAlignment = Alignment.Center
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+            //verticalAlignment = Alignment.CenterVertically
         ) {
             CircularIconButton(R.drawable.id_plus, "Add Task", Green, onAddTaskCLick)
             CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange, onAdjustWeightsClick)

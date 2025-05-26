@@ -41,7 +41,7 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 @ExperimentalMaterial3Api
 @Composable
 fun EditTaskFormScreen(
-    task: Task?,
+    task: Task,
     onBackClick: () -> Unit,
     onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
     // State variable to hold the current search query
@@ -63,13 +63,11 @@ fun EditTaskFormScreen(
     }
 
     LaunchedEffect(task) {
-        task?.let {
-            searchQuery = it.getTitle()
-            sliderValues["Benefit"] = it.getBenefit().toFloat()
-            sliderValues["Complexity"] = it.getComplexity().toFloat()
-            sliderValues["Urgency"] = it.getUrgency().toFloat()
-            sliderValues["Risk"] = it.getRisk().toFloat()
-        }
+        searchQuery = task.getTitle()
+        sliderValues["Benefit"] = task.getBenefit().toFloat()
+        sliderValues["Complexity"] = task.getComplexity().toFloat()
+        sliderValues["Urgency"] = task.getUrgency().toFloat()
+        sliderValues["Risk"] = task.getRisk().toFloat()
     }
 
 
@@ -140,7 +138,7 @@ fun EditTaskFormScreen(
 
             TextButton(onClick = { onSaveClick(searchQuery, sliderValues.toMap()) } ) {
                 Text(
-                    text = "EDIT",
+                    text = "SAVE",
                     color = Green,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Bold,
