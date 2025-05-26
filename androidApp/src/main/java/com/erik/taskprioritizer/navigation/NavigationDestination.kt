@@ -6,11 +6,12 @@ sealed class NavigationDestination(val route: String) {
     object AddTask: NavigationDestination("add_task")
     object AdjustWeights: NavigationDestination("adjust_weights")
 
-    object EditTask : NavigationDestination("edit_task/{taskId}") {
+    object EditTask : NavigationDestination("edit_task") {
         fun withId(taskId: String) = "edit_task/$taskId"
     }
 
-    object RemoveTask : NavigationDestination("remove_task/{taskId}") {
+    object RemoveTask : NavigationDestination("remove_task") {
         fun withId(taskId: String) = "remove_task/$taskId"
     }
+
 }
