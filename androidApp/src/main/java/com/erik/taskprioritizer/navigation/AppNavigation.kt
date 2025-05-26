@@ -49,7 +49,7 @@ fun AppNavigation() {
             )
         }
 
-        composable("edit_task/{taskId}") { backStackEntry ->
+        composable(NavigationDestination.EditTask.routeWithArg) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
 
             val task = taskViewModel.getTaskById(taskId.toString())
@@ -78,7 +78,7 @@ fun AppNavigation() {
             )
         }
 
-        composable("remove_task/{taskId}") { backStackEntry ->
+        composable(NavigationDestination.RemoveTask.routeWithArg) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
             
             LaunchedEffect(taskId) {
