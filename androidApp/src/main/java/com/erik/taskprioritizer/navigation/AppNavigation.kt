@@ -1,6 +1,5 @@
 package com.erik.taskprioritizer.navigation
 
-import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,8 +14,6 @@ import com.erik.taskprioritizer.ui.EditTaskFormScreen
 import com.erik.taskprioritizer.ui.PriorityTasksListScreen
 
 import com.erik.taskprioritizer.model.Task
-import com.erik.taskprioritizer.model.Weights
-import com.erik.taskprioritizer.repository.TaskRepository
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 
@@ -56,30 +53,26 @@ fun AppNavigation() {
         composable("${NavigationDestination.EditTask.route}/{taskId}") { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
 
-            taskId?.let { id ->
-                val task = taskViewModel.getTaskById(id)
-                EditTaskFormScreen(
-                    task = task,
-                    onBackClick = {
-                        navController.navigate(NavigationDestination.TaskList.route)
-                    },
-                    onSaveClick = { taskName, criteriaValues ->
-                        if (task != null) {
-                            val updatedTask = task.copy(
-                                name = taskName,
-                                benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
-                                complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
-                                urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
-                                risk = (criteriaValues["Risk"] ?: 0f).toInt()
-                            )
-                            val priorityScore = taskViewModel.calculatePriorityScore(updatedTask, weightsViewModel.getWeights())
-                            val finalTask = updatedTask.copy(priorityScore = priorityScore)
-                            taskViewModel.updateTask(finalTask)
-                        }
-                        navController.popBackStack()
-                    }
-                )
-            }
+            val task = taskViewModel.getTaskById(taskId.toString())
+            EditTaskFormScreen(
+                task = task,
+                onBackClick = {
+                    navController.navigate(NavigationDestination.TaskList.route)
+                },
+                onSaveClick = { taskName, criteriaValues ->
+                    val updatedTask = task.copy(
+                        name = taskName,
+                        benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
+                        complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
+                        urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
+                        risk = (criteriaValues["Risk"] ?: 0f).toInt()
+                    )
+                    val priorityScore = taskViewModel.calculatePriorityScore(updatedTask, weightsViewModel.getWeights())
+                    val finalTask = updatedTask.copy(priorityScore = priorityScore)
+                    taskViewModel.updateTask(finalTask)
+                    navController.navigate(NavigationDestination.TaskList.route)
+                }
+            )
         }
 
         composable("${NavigationDestination.RemoveTask.route}/{taskId}") { backStackEntry ->
@@ -88,7 +81,7 @@ fun AppNavigation() {
             LaunchedEffect(taskId) {
                 if (taskId != null) {
                     taskViewModel.removeTask(taskId)
-                    navController.popBackStack()
+                    navController.navigate(NavigationDestination.TaskList.route)
                 }
             }
         }
@@ -118,7 +111,7 @@ fun AppNavigation() {
                     val priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
                     val finalTask = task.copy(priorityScore = priorityScore)
                     taskViewModel.addTask(finalTask)
-                    navController.popBackStack()
+                    navController.navigate(NavigationDestination.TaskList.route)
                 }
             )
         }
@@ -149,7 +142,7 @@ fun AppNavigation() {
                         task.setPriorityScore(updatedPriorityScore)
                     }
 
-                    navController.popBackStack()
+                    navController.navigate(NavigationDestination.TaskList.route)
                 }
             )
         }

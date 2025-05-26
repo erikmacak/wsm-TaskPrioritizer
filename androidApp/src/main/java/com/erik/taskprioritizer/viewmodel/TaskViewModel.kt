@@ -23,7 +23,7 @@ class TaskViewModel: ViewModel() {
 
     fun getRankedTasksByName(name: String) = taskRepo.getAllRankedByName(name)
 
-    fun getTaskById(id: String): Task? = taskRepo.findById(id)
+    fun getTaskById(id: String): Task = taskRepo.findById(id)
 
     fun removeTask(id: String) = taskRepo.removeById(id)
 
