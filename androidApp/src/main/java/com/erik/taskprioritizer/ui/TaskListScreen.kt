@@ -16,16 +16,12 @@ import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
 
-import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-
 
 @Composable
 fun TaskListScreen(
     taskViewModel: TaskViewModel,
-    weightsViewModel: WeightsViewModel,
     onEditClick: (taskId: String) -> Unit,
     onRemoveClick: (taskId: String) -> Unit,
     onPrioritiesClick: () -> Unit,
@@ -44,9 +40,6 @@ fun TaskListScreen(
             }
         }
     }
-
-    //
-    val weights = weightsViewModel.getWeights()
 
     // Main column layout for the UI
     Column(

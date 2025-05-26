@@ -31,7 +31,6 @@ fun AppNavigation() {
         composable(NavigationDestination.TaskList.route) {
             TaskListScreen (
                 taskViewModel = taskViewModel,
-                weightsViewModel = weightsViewModel,
                 onEditClick = { taskId ->
                     navController.navigate(NavigationDestination.EditTask.withId(taskId))
                 },
