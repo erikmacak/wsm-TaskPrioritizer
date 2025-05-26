@@ -54,7 +54,6 @@ class TaskRepository {
         }
     }
 
-
     fun findById(id: String): Task {
         return taskList.find {it.getId() == id}!!
     }
@@ -66,9 +65,5 @@ class TaskRepository {
                 iterator.remove()
             }
         }
-    }
-
-    fun clear() {
-        taskList.clear()
     }
 }

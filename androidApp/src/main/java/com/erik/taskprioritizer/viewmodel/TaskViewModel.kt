@@ -4,9 +4,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import com.erik.taskprioritizer.logic.calculateTaskScoring
 import com.erik.taskprioritizer.model.Task
-import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.repository.TaskRepository
-import com.erik.taskprioritizer.repository.WeightsRepository
 
 class TaskViewModel: ViewModel() {
     private val taskRepo = TaskRepository()
@@ -28,8 +26,6 @@ class TaskViewModel: ViewModel() {
     fun removeTask(id: String) = taskRepo.removeById(id)
 
     fun calculatePriorityScore(task: Task, weights: Map<String, Float>): Float = calculateTaskScoring(task, weights)
-
-    fun clearTasks() = taskRepo.clear()
 
     val expandedStates = mutableStateMapOf<String, Boolean>()
 
