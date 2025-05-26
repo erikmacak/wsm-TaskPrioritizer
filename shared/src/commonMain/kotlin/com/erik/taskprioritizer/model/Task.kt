@@ -4,7 +4,7 @@ import com.erik.taskprioritizer.util.generateUUID
 
 data class Task (
     private val id: String = generateUUID(),
-    private val name: String,
+    private val title: String,
     private val benefit: Int,
     private val complexity: Int,
     private val urgency: Int,
@@ -13,16 +13,16 @@ data class Task (
     private var priorityScore: Float = 0f,
     private var rank: Int = 0
 ) {
-    fun getTitle(): String {
-        return name
-    }
-
     fun getId(): String {
         return id;
     }
 
+    fun getTitle(): String {
+        return this.title
+    }
+
     fun getBenefit(): Int {
-        return benefit;
+        return benefit
     }
 
     fun getComplexity(): Int {
@@ -35,10 +35,6 @@ data class Task (
 
     fun getRisk(): Int {
         return risk;
-    }
-
-    fun setPriorityScore(score: Float) {
-        priorityScore = score;
     }
 
     fun getPriorityScore(): Float {
