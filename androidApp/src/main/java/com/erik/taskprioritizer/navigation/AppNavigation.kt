@@ -50,7 +50,7 @@ fun AppNavigation() {
         }
 
         composable(NavigationDestination.EditTask.routeWithArg) { backStackEntry ->
-            val taskId = backStackEntry.arguments?.getString("taskId")
+            val taskId = backStackEntry.arguments!!.getString("taskId")
 
             val task = taskViewModel.getTaskById(taskId.toString())
             EditTaskFormScreen(
@@ -61,10 +61,10 @@ fun AppNavigation() {
                 onSaveClick = { taskName, criteriaValues ->
                     val updatedTask = task.copy(
                         title = taskName,
-                        benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
-                        complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
-                        urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
-                        risk = (criteriaValues["Risk"] ?: 0f).toInt()
+                        benefit = (criteriaValues["Benefit"]!!).toInt(),
+                        complexity = (criteriaValues["Complexity"]!!).toInt(),
+                        urgency = (criteriaValues["Urgency"]!!).toInt(),
+                        risk = (criteriaValues["Risk"]!!).toInt()
                     )
 
                     val finalTask = updatedTask.copy(
@@ -79,12 +79,11 @@ fun AppNavigation() {
         }
 
         composable(NavigationDestination.RemoveTask.routeWithArg) { backStackEntry ->
-            val taskId = backStackEntry.arguments?.getString("taskId")
+            val taskId = backStackEntry.arguments!!.getString("taskId")
             
             LaunchedEffect(taskId) {
                 taskViewModel.removeTask(taskId!!)
                 navController.navigate(NavigationDestination.TaskList.route)
-
             }
         }
 
@@ -105,10 +104,10 @@ fun AppNavigation() {
                 onSaveClick = { taskName, criteriaValues ->
                     val task = Task(
                         title = taskName,
-                        benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
-                        complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
-                        urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
-                        risk = (criteriaValues["Risk"] ?: 0f).toInt()
+                        benefit = (criteriaValues["Benefit"]!!).toInt(),
+                        complexity = (criteriaValues["Complexity"]!!).toInt(),
+                        urgency = (criteriaValues["Urgency"]!!).toInt(),
+                        risk = (criteriaValues["Risk"]!!).toInt()
                     )
 
                     val finalTask = task.copy(
@@ -130,7 +129,7 @@ fun AppNavigation() {
                 },
                 onAdjustClick = { weightsValues ->
                     val newWeightsValues = listOf("Urgency", "Risk", "Complexity", "Benefit")
-                        .associateWith { weightsValues[it] ?: 0f }
+                        .associateWith { weightsValues[it]!!}
 
                     weightsViewModel.updateWeights(newWeightsValues)
 
