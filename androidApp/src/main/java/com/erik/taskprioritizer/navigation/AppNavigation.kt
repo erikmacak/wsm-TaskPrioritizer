@@ -33,10 +33,10 @@ fun AppNavigation() {
                 taskViewModel = taskViewModel,
                 weightsViewModel = weightsViewModel,
                 onEditClick = { taskId ->
-                    navController.navigate("${NavigationDestination.EditTask.route}/$taskId")
+                    navController.navigate(NavigationDestination.EditTask.withId(taskId))
                 },
                 onRemoveClick = { taskId ->
-                    navController.navigate("${NavigationDestination.RemoveTask.route}/$taskId")
+                    navController.navigate(NavigationDestination.RemoveTask.withId(taskId))
                 },
                 onPrioritiesClick = {
                     navController.navigate(NavigationDestination.PriorityTaskList.route)
@@ -50,7 +50,7 @@ fun AppNavigation() {
             )
         }
 
-        composable("${NavigationDestination.EditTask.route}/{taskId}") { backStackEntry ->
+        composable("edit_task/{taskId}") { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
 
             val task = taskViewModel.getTaskById(taskId.toString())
@@ -61,28 +61,31 @@ fun AppNavigation() {
                 },
                 onSaveClick = { taskName, criteriaValues ->
                     val updatedTask = task.copy(
-                        name = taskName,
+                        title = taskName,
                         benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
                         complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
                         urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
                         risk = (criteriaValues["Risk"] ?: 0f).toInt()
                     )
-                    val priorityScore = taskViewModel.calculatePriorityScore(updatedTask, weightsViewModel.getWeights())
-                    val finalTask = updatedTask.copy(priorityScore = priorityScore)
+
+                    val finalTask = updatedTask.copy(
+                        priorityScore = taskViewModel.calculatePriorityScore(updatedTask, weightsViewModel.getWeights())
+                    )
+
                     taskViewModel.updateTask(finalTask)
+
                     navController.navigate(NavigationDestination.TaskList.route)
                 }
             )
         }
 
-        composable("${NavigationDestination.RemoveTask.route}/{taskId}") { backStackEntry ->
+        composable("remove_task/{taskId}") { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
             
             LaunchedEffect(taskId) {
-                if (taskId != null) {
-                    taskViewModel.removeTask(taskId)
-                    navController.navigate(NavigationDestination.TaskList.route)
-                }
+                taskViewModel.removeTask(taskId!!)
+                navController.navigate(NavigationDestination.TaskList.route)
+
             }
         }
 
@@ -102,15 +105,19 @@ fun AppNavigation() {
                 },
                 onSaveClick = { taskName, criteriaValues ->
                     val task = Task(
-                        name = taskName,
+                        title = taskName,
                         benefit = (criteriaValues["Benefit"] ?: 0f).toInt(),
                         complexity = (criteriaValues["Complexity"] ?: 0f).toInt(),
                         urgency = (criteriaValues["Urgency"] ?: 0f).toInt(),
                         risk = (criteriaValues["Risk"] ?: 0f).toInt()
                     )
-                    val priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
-                    val finalTask = task.copy(priorityScore = priorityScore)
+
+                    val finalTask = task.copy(
+                        priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
+                    )
+
                     taskViewModel.addTask(finalTask)
+
                     navController.navigate(NavigationDestination.TaskList.route)
                 }
             )
@@ -123,23 +130,16 @@ fun AppNavigation() {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onAdjustClick = { weightsValues ->
-                    val urgency: Float = weightsValues["Urgency"] ?: 0f
-                    val risk: Float = weightsValues["Risk"] ?: 0f
-                    val complexity: Float = weightsValues["Complexity"] ?: 0f
-                    val benefit: Float = weightsValues["Benefit"] ?: 0f
-
-                    val newWeightsValues: Map<String, Float> = mapOf(
-                        "Urgency" to urgency,
-                        "Risk" to risk,
-                        "Complexity" to complexity,
-                        "Benefit" to benefit
-                    )
+                    val newWeightsValues = listOf("Urgency", "Risk", "Complexity", "Benefit")
+                        .associateWith { weightsValues[it] ?: 0f }
 
                     weightsViewModel.updateWeights(newWeightsValues)
 
-                    val updateTask = taskViewModel.getTasks().map { task ->
-                        val updatedPriorityScore = taskViewModel.calculatePriorityScore(task, newWeightsValues)
-                        task.setPriorityScore(updatedPriorityScore)
+                    taskViewModel.getTasks().forEach { task ->
+                        val updatedTask = task.copy(
+                            priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
+                        )
+                        taskViewModel.updateTask(updatedTask)
                     }
 
                     navController.navigate(NavigationDestination.TaskList.route)
