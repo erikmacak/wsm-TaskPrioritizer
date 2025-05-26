@@ -14,6 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -61,6 +62,17 @@ fun EditTaskFormScreen(
         }
     }
 
+    LaunchedEffect(task) {
+        task?.let {
+            searchQuery = it.getTitle()
+            sliderValues["Benefit"] = it.getBenefit().toFloat()
+            sliderValues["Complexity"] = it.getComplexity().toFloat()
+            sliderValues["Urgency"] = it.getUrgency().toFloat()
+            sliderValues["Risk"] = it.getRisk().toFloat()
+        }
+    }
+
+
     // Main column layout for the UI
     Column (
         modifier = Modifier
@@ -97,7 +109,6 @@ fun EditTaskFormScreen(
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
                 textColor = TextGray,
-                placeholderValue = "Create PR"
             )
         }
 
