@@ -27,7 +27,7 @@ class TaskViewModel: ViewModel() {
 
     fun removeTask(id: String) = taskRepo.removeById(id)
 
-    fun calculatePriorityScore(task: Task, weights: Weights): Float = calculateTaskScoring(task, weights)
+    fun calculatePriorityScore(task: Task, weights: Map<String, Float>): Float = calculateTaskScoring(task, weights)
 
     fun clearTasks() = taskRepo.clear()
 

@@ -7,7 +7,7 @@ import com.erik.taskprioritizer.repository.WeightsRepository
 class WeightsViewModel: ViewModel() {
     private val weightsRepo = WeightsRepository()
 
-    fun getWeights(): Weights = weightsRepo.get()
+    fun getWeights(): Map<String, Float> = weightsRepo.getAll()
 
-    fun updateWeights(newWeights: Weights) = weightsRepo.update(newWeights)
+    fun updateWeights(newWeights: Map<String, Float>) = weightsRepo.update(newWeights)
 }

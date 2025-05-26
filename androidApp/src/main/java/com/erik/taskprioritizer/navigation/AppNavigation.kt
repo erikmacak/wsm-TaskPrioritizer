@@ -125,6 +125,7 @@ fun AppNavigation() {
 
         composable(NavigationDestination.AdjustWeights.route) {
             AdjustWeightsScreen(
+                weightsViewModel = weightsViewModel,
                 onBackClick = {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
@@ -134,7 +135,13 @@ fun AppNavigation() {
                     val complexity: Float = weightsValues["Complexity"] ?: 0f
                     val benefit: Float = weightsValues["Benefit"] ?: 0f
 
-                    val newWeightsValues: Weights = Weights(benefit, complexity, urgency, risk)
+                    val newWeightsValues: Map<String, Float> = mapOf(
+                        "Urgency" to urgency,
+                        "Risk" to risk,
+                        "Complexity" to complexity,
+                        "Benefit" to benefit
+                    )
+
                     weightsViewModel.updateWeights(newWeightsValues)
 
                     val updateTask = taskViewModel.getTasks().map { task ->
