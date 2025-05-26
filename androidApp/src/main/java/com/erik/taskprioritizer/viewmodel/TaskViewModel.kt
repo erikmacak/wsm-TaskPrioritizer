@@ -7,7 +7,7 @@ import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.repository.TaskRepository
 
 class TaskViewModel: ViewModel() {
-    private val taskRepo = TaskRepository()
+    private val taskRepo = TaskRepository
 
     fun addTask(task: Task) = taskRepo.add(task)
 

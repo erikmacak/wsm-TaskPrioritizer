@@ -2,7 +2,7 @@ package com.erik.taskprioritizer.repository
 
 import com.erik.taskprioritizer.model.Weights
 
-class WeightsRepository {
+object WeightsRepository {
     private var weightsList: Map<String, Float> = mapOf(
         "Urgency" to 0.25f,
         "Risk" to 0.2f,

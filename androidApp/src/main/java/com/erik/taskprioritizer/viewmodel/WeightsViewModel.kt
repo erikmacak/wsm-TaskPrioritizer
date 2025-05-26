@@ -5,7 +5,7 @@ import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.repository.WeightsRepository
 
 class WeightsViewModel: ViewModel() {
-    private val weightsRepo = WeightsRepository()
+    private val weightsRepo = WeightsRepository
 
     fun getWeights(): Map<String, Float> = weightsRepo.getAll()
 
