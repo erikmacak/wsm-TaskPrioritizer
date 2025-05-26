@@ -39,7 +39,6 @@ fun IconButtons(
         ) {
             CircularIconButton(R.drawable.id_plus, "Add Task", Green, onAddTaskCLick)
             CircularIconButton(R.drawable.id_edit, "Edit Weights", Orange, onAdjustWeightsClick)
-            //CircularIconButton(R.drawable.id_recalc, "Recalculate", Blue)
         }
     }
 }
