@@ -89,7 +89,7 @@ fun AdjustWeightsScreen(
         Spacer(modifier = Modifier.height(36.dp))
 
         // Create sliders for each criterion
-        sliderValues.forEach { (label, _) ->
+        criteria.forEach { (label, _) ->
             SliderHeading(label = label)
 
             CustomSlider(

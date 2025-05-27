@@ -141,7 +141,7 @@ fun AppNavigation() {
                 },
                 onAdjustClick = { weightsValues ->
                     Log.d("AdjustWeightsScreen", "Adjust button clicked")
-                    val newWeightsValues = listOf("Urgency", "Risk", "Complexity", "Benefit")
+                    val newWeightsValues = listOf("Benefit", "Complexity", "Urgency", "Risk")
                         .associateWith { weightsValues[it]!!}
 
                     weightsViewModel.updateWeights(newWeightsValues)
