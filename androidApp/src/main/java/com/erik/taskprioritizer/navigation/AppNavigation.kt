@@ -1,9 +1,13 @@
 package com.erik.taskprioritizer.navigation
 
+import android.os.Build
+import android.os.FileUtils
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -15,15 +19,19 @@ import com.erik.taskprioritizer.ui.EditTaskFormScreen
 import com.erik.taskprioritizer.ui.PriorityTasksListScreen
 
 import com.erik.taskprioritizer.model.Task
+import com.erik.taskprioritizer.util.ExportUtils
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
+import com.erik.taskprioritizer.util.saveToDownloads
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val taskViewModel: TaskViewModel = viewModel()
     val weightsViewModel: WeightsViewModel = viewModel()
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -101,6 +109,14 @@ fun AppNavigation() {
                 onAllClick = {
                     Log.d("PriorityTaskListScreen", "All section clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
+                },
+                onCsvExportClick = {
+                    val csv = ExportUtils.exportToCsv(taskViewModel.getRankedTasks())
+                    saveToDownloads(context, "tasks.csv", "text/csv", csv)
+                },
+                onJsonExportClick = {
+                    val json = ExportUtils.exportToJson(taskViewModel.getRankedTasks())
+                    saveToDownloads(context, "tasks.json", "application/json", json)
                 }
             )
         }

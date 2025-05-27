@@ -37,7 +37,9 @@ import com.erik.taskprioritizer.viewmodel.TaskViewModel
 @Composable
 fun PriorityTasksListScreen(
     taskViewModel: TaskViewModel,
-    onAllClick: () -> Unit) {
+    onAllClick: () -> Unit,
+    onCsvExportClick: () -> Unit,
+    onJsonExportClick: ()-> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -131,7 +133,7 @@ fun PriorityTasksListScreen(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            ExportPossibilities()
+            ExportPossibilities(onCsvExportClick, onJsonExportClick)
         }
     }
 }
