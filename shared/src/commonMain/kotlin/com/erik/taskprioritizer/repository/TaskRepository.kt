@@ -17,6 +17,10 @@ object TaskRepository {
         }
     }
 
+    fun updateAll(tasksToUpdate: List<Task>) {
+        tasksToUpdate.forEach { task ->  update(task) }
+    }
+
     fun getAll(): List<Task> {
         return taskList.toList()
     }

@@ -20,6 +20,16 @@ class TaskViewModel: ViewModel() {
         Log.d("TaskViewModel", "Task updated: ${task.getTitle()} [ID: ${task.getId()}]")
     }
 
+    fun updateTasks(tasks: List<Task>) {
+        if (tasks.isEmpty()) {
+            Log.d("TaskViewModel", "No tasks to update")
+            return
+        }
+
+        taskRepo.updateAll(tasks)
+        Log.d("TaskViewModel", "Updated ${tasks.size} tasks with new priority scores.")
+    }
+
     fun getTasks(): List<Task> {
         Log.d("TaskViewModel", "Providing all tasks (${taskRepo.getAll().size})")
         return taskRepo.getAll()
