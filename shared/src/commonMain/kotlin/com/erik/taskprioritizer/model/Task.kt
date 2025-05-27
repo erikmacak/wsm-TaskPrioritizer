@@ -1,7 +1,9 @@
 package com.erik.taskprioritizer.model
 
 import com.erik.taskprioritizer.util.generateUUID
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Task (
     private val id: String = generateUUID(),
     private val title: String,
@@ -14,7 +16,7 @@ data class Task (
     private var rank: Int = 0
 ) {
     fun getId(): String {
-        return id;
+        return id
     }
 
     fun getTitle(): String {
@@ -26,22 +28,22 @@ data class Task (
     }
 
     fun getComplexity(): Int {
-        return complexity;
+        return complexity
     }
 
     fun getUrgency(): Int {
-        return urgency;
+        return urgency
     }
 
     fun getRisk(): Int {
-        return risk;
+        return risk
     }
 
     fun getPriorityScore(): Float {
-        return priorityScore;
+        return priorityScore
     }
 
     fun getRank(): Int {
-        return rank;
+        return rank
     }
 }
