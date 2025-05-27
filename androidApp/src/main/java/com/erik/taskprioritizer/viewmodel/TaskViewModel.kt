@@ -3,7 +3,7 @@ package com.erik.taskprioritizer.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
-import com.erik.taskprioritizer.logic.calculateTaskScoring
+import com.erik.taskprioritizer.logic.TaskScorer
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.repository.TaskRepository
 
@@ -54,9 +54,14 @@ class TaskViewModel: ViewModel() {
     }
 
     fun calculatePriorityScore(task: Task, weights: Map<String, Float>): Float {
-        val score = calculateTaskScoring(task, weights)
+        val score = TaskScorer.calculate(task, weights)
         Log.d("TaskViewModel", "Calculated priority score for '${task.getTitle()}' [ID: ${task.getId()}]: $score")
         return score
+    }
+
+    fun recalculateAllPriorityScore(tasks: List<Task>, weights: Map<String, Float>): List<Task> {
+        Log.d("TaskViewModel", "Recalculated priority score for every stored task")
+        return TaskScorer.recalculateAllTasks(tasks, weights)
     }
 
     private val expandedStates = mutableStateMapOf<String, Boolean>()
