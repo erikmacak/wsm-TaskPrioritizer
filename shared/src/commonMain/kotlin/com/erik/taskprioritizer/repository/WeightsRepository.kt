@@ -5,7 +5,7 @@ object WeightsRepository {
         "Benefit" to 0.3f,
         "Complexity" to 0.3f,
         "Urgency" to 0.2f,
-        "Risk" to 0.2f,
+        "Risk" to 0.2f
     )
 
     fun getAll(): Map<String, Float> = weightsList

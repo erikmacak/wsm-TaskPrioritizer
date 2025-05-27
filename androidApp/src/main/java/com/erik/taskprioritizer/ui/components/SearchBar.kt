@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.ui.text.TextStyle
+
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
@@ -33,6 +35,7 @@ fun SearchBar(
             )
         },
         modifier = Modifier.fillMaxWidth(),
+        textStyle = TextStyle(fontFamily = Montserrat, fontWeight = FontWeight.Bold),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = BackgroundGray,
             unfocusedContainerColor = BackgroundGray,

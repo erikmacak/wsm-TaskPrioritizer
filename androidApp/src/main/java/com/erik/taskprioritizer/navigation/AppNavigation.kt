@@ -1,5 +1,6 @@
 package com.erik.taskprioritizer.navigation
 
+import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,19 +33,23 @@ fun AppNavigation() {
             TaskListScreen (
                 taskViewModel = taskViewModel,
                 onPrioritiesClick = {
+                    Log.d("TaskListScreen", "Priorities section clicked")
                     navController.navigate(NavigationDestination.PriorityTaskList.route)
                 },
                 onEditClick = { taskId ->
-
+                    Log.d("TaskListScreen", "Edit clicked for $taskId")
                     navController.navigate(NavigationDestination.EditTask.withId(taskId))
                 },
                 onRemoveClick = { taskId ->
+                    Log.d("TaskListScreen", "Remove clicked for $taskId")
                     navController.navigate(NavigationDestination.RemoveTask.withId(taskId))
                 },
                 onAddTaskClick = {
+                    Log.d("TaskListScreen", "Add task clicked")
                     navController.navigate(NavigationDestination.AddTask.route)
                 },
                 onAdjustWeightsClick = {
+                    Log.d("TaskListScreen", "Adjust weights clicked")
                     navController.navigate(NavigationDestination.AdjustWeights.route)
                 }
             )
@@ -57,9 +62,11 @@ fun AppNavigation() {
             EditTaskFormScreen(
                 task = task,
                 onBackClick = {
+                    Log.d("EditTaskFormScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onSaveClick = { taskName, criteriaValues ->
+                    Log.d("EditTaskFormScreen", "Save button clicked for $taskName")
                     val updatedTask = task.copy(
                         title = taskName,
                         benefit = (criteriaValues["Benefit"]!!).toInt(),
@@ -92,6 +99,7 @@ fun AppNavigation() {
             PriorityTasksListScreen(
                 taskViewModel = taskViewModel,
                 onAllClick = {
+                    Log.d("PriorityTaskListScreen", "All section clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
                 }
             )
@@ -100,9 +108,11 @@ fun AppNavigation() {
         composable(NavigationDestination.AddTask.route) {
             AddTaskFormScreen(
                 onBackClick = {
+                    Log.d("AddTaskFormScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onAddClick = { taskName, criteriaValues ->
+                    Log.d("AddTaskFormScreen", "Add button clicked for $taskName")
                     val task = Task(
                         title = taskName,
                         benefit = (criteriaValues["Benefit"]!!).toInt(),
@@ -126,9 +136,11 @@ fun AppNavigation() {
             AdjustWeightsScreen(
                 weightsViewModel = weightsViewModel,
                 onBackClick = {
+                    Log.d("AdjustWeightsScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onAdjustClick = { weightsValues ->
+                    Log.d("AdjustWeightsScreen", "Adjust button clicked")
                     val newWeightsValues = listOf("Urgency", "Risk", "Complexity", "Benefit")
                         .associateWith { weightsValues[it]!!}
 
