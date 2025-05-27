@@ -67,13 +67,13 @@ class TaskViewModel: ViewModel() {
     private val expandedStates = mutableStateMapOf<String, Boolean>()
 
     fun toggleExpanded(taskId: String) {
-        val newState = !(expandedStates[taskId]!!)
+        val newState = !(expandedStates[taskId] ?: false)
         expandedStates[taskId] = newState
         Log.d("TaskViewModel", "Toggled expanded state for task $taskId -> $newState")
     }
 
     fun isExpanded(taskId: String): Boolean {
-        val state = expandedStates[taskId]!!
+        val state = expandedStates[taskId] ?: false
         Log.d("TaskViewModel", "Checked expanded state for task $taskId -> $state")
         return state
     }

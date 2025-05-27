@@ -146,12 +146,8 @@ fun AppNavigation() {
 
                     weightsViewModel.updateWeights(newWeightsValues)
 
-                    taskViewModel.getTasks().forEach { task ->
-                        val updatedTask = task.copy(
-                            priorityScore = taskViewModel.calculatePriorityScore(task, weightsViewModel.getWeights())
-                        )
-                        taskViewModel.updateTask(updatedTask)
-                    }
+                    val updatedTasks = taskViewModel.recalculateAllPriorityScore(taskViewModel.getTasks(), weightsViewModel.getWeights())
+                    updatedTasks.forEach {  task ->  taskViewModel.updateTask(task) }
 
                     navController.navigate(NavigationDestination.TaskList.route)
                 }
