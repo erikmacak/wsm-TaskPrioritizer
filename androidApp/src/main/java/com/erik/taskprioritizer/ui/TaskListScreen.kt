@@ -16,45 +16,29 @@ import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.components.TaskItemCard
 
-import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.erik.taskprioritizer.model.Weights
-
 
 @Composable
 fun TaskListScreen(
-    taskViewModel: TaskViewModel = viewModel(),
-    onEditClick: () -> Unit,
+    taskViewModel: TaskViewModel,
     onPrioritiesClick: () -> Unit,
+    onEditClick: (taskId: String) -> Unit,
+    onRemoveClick: (taskId: String) -> Unit,
     onAddTaskClick: () -> Unit,
     onAdjustWeightsClick: () -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // Example task with dummy values
-    var tasks by remember {
-        mutableStateOf(
-            listOf(
-                Task(
-                    id = "d52a4216-0acc-43d7-ba00-d3ffdeecc59b",
-                    name = "Fix landing page",
-                    benefit = 4,
-                    complexity = 2,
-                    urgency = 3,
-                    risk = 1
-                )
-            )
-        )
+    //
+    val tasks by remember(searchQuery, taskViewModel) {
+        derivedStateOf {
+            if (searchQuery.isNotBlank()) {
+                taskViewModel.getTasksByName(searchQuery)
+            } else {
+                taskViewModel.getTasks()
+            }
+        }
     }
-
-    // Initialize weights for task scoring
-    var weights = Weights(
-        urgency = 0.25f,
-        risk = 0.2f,
-        complexity = 0.3f,
-        benefit = 0.25f
-    )
 
     // Main column layout for the UI
     Column(
@@ -107,15 +91,16 @@ fun TaskListScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LazyColumn {
+        LazyColumn (
+            modifier = Modifier.weight(1f)
+        ) {
             items(tasks) { task ->
                 TaskItemCard(
                     task = task,
                     isExpanded = taskViewModel.isExpanded(task.getId()),
                     onExpandClick = { taskViewModel.toggleExpanded(task.getId()) },
-                    onEditClick = onEditClick,
-                    onRemoveClick = { /* ... */ },
-                    weights = weights
+                    onEditClick =  { onEditClick(task.getId()) },
+                    onRemoveClick = { onRemoveClick(task.getId()) },
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -125,7 +110,7 @@ fun TaskListScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 24.dp)
         ) {
             IconButtons(onAddTaskCLick = onAddTaskClick, onAdjustWeightsClick = onAdjustWeightsClick)
         }

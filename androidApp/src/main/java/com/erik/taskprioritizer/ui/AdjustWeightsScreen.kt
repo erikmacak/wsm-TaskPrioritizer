@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,23 +32,26 @@ import com.erik.taskprioritizer.ui.components.SliderHeading
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.TextGray
+import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdjustWeightsScreen(onBackClick: () -> Unit) {
-    // List of criteria
-    val criteria = listOf(
-        "Benefit",
-        "Complexity",
-        "Urgency",
-        "Risk"
-    )
+fun AdjustWeightsScreen(
+    weightsViewModel: WeightsViewModel,
+    onBackClick: () -> Unit,
+    onAdjustClick: (Map<String, Float>) -> Unit) {
+
+    val criteria = weightsViewModel.getWeights()
 
     // State map to hold slider values for each criterion, initialized to 0
     val sliderValues = remember {
         mutableStateMapOf<String, Float>().apply {
-            criteria.forEach{ put(it, 0f) }
+            criteria.forEach { (key, value) -> put(key, value) }
         }
+    }
+
+    LaunchedEffect(criteria) {
+        criteria.forEach { (key, value) -> sliderValues[key] = value }
     }
 
     // Main column layout for the UI
@@ -85,12 +89,11 @@ fun AdjustWeightsScreen(onBackClick: () -> Unit) {
         Spacer(modifier = Modifier.height(36.dp))
 
         // Create sliders for each criterion
-        criteria.forEach { label ->
-            // Display the heading for the slider
+        criteria.forEach { (label, _) ->
             SliderHeading(label = label)
 
             CustomSlider(
-                value = sliderValues[label] ?: 0f,
+                value = sliderValues[label]!!,
                 onValueChange = { sliderValues[label] = it },
                 valueRange = 0f..1f,
                 labels = (0..10).map { (it / 10.0).toString() },
@@ -112,7 +115,7 @@ fun AdjustWeightsScreen(onBackClick: () -> Unit) {
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { /* uložení akce */ }) {
+            TextButton(onClick = { onAdjustClick(sliderValues.toMap()) }) {
                 Text(
                     text = "ADJUST",
                     color = Green,

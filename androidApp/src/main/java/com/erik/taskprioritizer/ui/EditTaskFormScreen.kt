@@ -14,6 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.erik.taskprioritizer.model.Task
 
 import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
@@ -38,7 +40,10 @@ import com.erik.taskprioritizer.ui.theme.TextGray
 
 @ExperimentalMaterial3Api
 @Composable
-fun EditTaskFormScreen(onBackClick: () -> Unit) {
+fun EditTaskFormScreen(
+    task: Task,
+    onBackClick: () -> Unit,
+    onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -56,6 +61,15 @@ fun EditTaskFormScreen(onBackClick: () -> Unit) {
             criteria.forEach{ put(it, 0f) }
         }
     }
+
+    LaunchedEffect(task) {
+        searchQuery = task.getTitle()
+        sliderValues["Benefit"] = task.getBenefit().toFloat()
+        sliderValues["Complexity"] = task.getComplexity().toFloat()
+        sliderValues["Urgency"] = task.getUrgency().toFloat()
+        sliderValues["Risk"] = task.getRisk().toFloat()
+    }
+
 
     // Main column layout for the UI
     Column (
@@ -93,7 +107,6 @@ fun EditTaskFormScreen(onBackClick: () -> Unit) {
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
                 textColor = TextGray,
-                placeholderValue = "Create PR"
             )
         }
 
@@ -123,9 +136,9 @@ fun EditTaskFormScreen(onBackClick: () -> Unit) {
         ) {
             BackActionButton(onBackClick = onBackClick)
 
-            TextButton(onClick = { /* upravení úkolu */ }) {
+            TextButton(onClick = { onSaveClick(searchQuery, sliderValues.toMap()) } ) {
                 Text(
-                    text = "EDIT",
+                    text = "SAVE",
                     color = Green,
                     fontFamily = Montserrat,
                     fontWeight = FontWeight.Bold,

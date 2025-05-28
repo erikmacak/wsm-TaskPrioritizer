@@ -10,8 +10,11 @@ import com.erik.taskprioritizer.ui.theme.Blue
 import com.erik.taskprioritizer.ui.theme.Montserrat
 
 @Composable
-fun ExportPossibilities () {
-    TextButton(onClick = { /* TODO: uložení akce */ }) {
+fun ExportPossibilities (
+    onCsvExportClick: () -> Unit,
+    onJsonExportClick: () -> Unit
+) {
+    TextButton(onClick = onCsvExportClick) {
         Text(
             text = "CSV",
             color = Blue,
@@ -21,7 +24,7 @@ fun ExportPossibilities () {
         )
     }
 
-    TextButton(onClick = { /* TODO: uložení akce */ }) {
+    TextButton(onClick = onJsonExportClick) {
         Text(
             text = "JSON",
             color = Blue,

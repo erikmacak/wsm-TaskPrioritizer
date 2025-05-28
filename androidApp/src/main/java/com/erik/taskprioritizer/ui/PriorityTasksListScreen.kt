@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +32,29 @@ import com.erik.taskprioritizer.ui.components.RankedTaskItemCard
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SelectableTabButton
 import com.erik.taskprioritizer.ui.theme.Montserrat
+import com.erik.taskprioritizer.viewmodel.TaskViewModel
 
 @Composable
-fun PriorityTasksListScreen(onAllClick: () -> Unit) {
+fun PriorityTasksListScreen(
+    taskViewModel: TaskViewModel,
+    onAllClick: () -> Unit,
+    onCsvExportClick: () -> Unit,
+    onJsonExportClick: ()-> Unit) {
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    // List of tasks to be displayed
-    val tasks = listOf(
-        "Fix landing page",
-        "Share prototype with team",
-        "Add unit tests",
-        "Add e2e tests",
-        "Configure db connection"
-    )
+    //
+    //val rankedTasks = taskViewModel.getRankedTasks()
+
+    val rankedTasks by remember(searchQuery, taskViewModel) {
+        derivedStateOf {
+            if (searchQuery.isNotBlank()) {
+                taskViewModel.getRankedTasksByName(searchQuery)
+            } else {
+                taskViewModel.getRankedTasks()
+            }
+        }
+    }
 
     // Main column layout for the UI
     Column (
@@ -101,8 +111,8 @@ fun PriorityTasksListScreen(onAllClick: () -> Unit) {
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
-            items(tasks) { task ->
-                RankedTaskItemCard(taskTitle = task)
+            items(rankedTasks) { task ->
+                RankedTaskItemCard(taskTitle = task.getTitle(), taskRank = task.getRank())
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
@@ -123,7 +133,7 @@ fun PriorityTasksListScreen(onAllClick: () -> Unit) {
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            ExportPossibilities()
+            ExportPossibilities(onCsvExportClick, onJsonExportClick)
         }
     }
 }

@@ -31,15 +31,10 @@ import com.erik.taskprioritizer.ui.theme.Montserrat
 
 import com.erik.taskprioritizer.model.Task
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Divider
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.logic.calculateTaskScoring
-import com.erik.taskprioritizer.model.Weights
 import com.erik.taskprioritizer.ui.theme.BackgroundGray
 import com.erik.taskprioritizer.ui.theme.Orange
 import com.erik.taskprioritizer.ui.theme.Red
@@ -52,7 +47,6 @@ fun TaskItemCard(
     onExpandClick: () -> Unit,
     onEditClick: () -> Unit,
     onRemoveClick: () -> Unit,
-    weights: Weights
 ) {
     Card(
         modifier = Modifier
@@ -92,7 +86,7 @@ fun TaskItemCard(
             }
 
             Text(
-                text = "PS: " + calculateTaskScoring(task, weights),
+                text = "PS: " + task.getPriorityScore(),
                 color = TextGray,
                 fontFamily = Montserrat,
                 fontWeight = FontWeight.Bold,
@@ -104,10 +98,10 @@ fun TaskItemCard(
                 Text(
                     text = task.getId(),
                     color = TextGray,
-                    fontSize = 15.sp
+                    fontSize = 14.sp
                 )
 
-                Row() {
+                Row {
                     Text(
                         text = "Benefit: " + task.getBenefit().toString(),
                         color = Color.White,
@@ -125,7 +119,7 @@ fun TaskItemCard(
                     )
                 }
 
-                Row() {
+                Row {
                     Text(
                         text = "Complexity: " + task.getComplexity().toString(),
                         color = Color.White,
@@ -170,7 +164,7 @@ fun TaskItemCard(
                         color = Red,
                         fontFamily = Montserrat,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable { /* onRemove */ }
+                        modifier = Modifier.clickable { onRemoveClick() }
                     )
                 }
             }
