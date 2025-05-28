@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -24,13 +25,22 @@ import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 import com.erik.taskprioritizer.util.saveToDownloads
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.SnackbarHostState
+
+
 @RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+
     val taskViewModel: TaskViewModel = viewModel()
     val weightsViewModel: WeightsViewModel = viewModel()
+
+    val snackbarMessage = remember { mutableStateOf<String?>(null) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val context = LocalContext.current
 
     NavHost(
@@ -69,11 +79,19 @@ fun AppNavigation() {
             val task = taskViewModel.getTaskById(taskId.toString())
             EditTaskFormScreen(
                 task = task,
+                snackbarMessage = snackbarMessage,
+                snackbarHostState = snackbarHostState,
                 onBackClick = {
                     Log.d("EditTaskFormScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onSaveClick = { taskName, criteriaValues ->
+                    if (ValidationUtils.isTaskTitleEmpty(taskName)) {
+                        Log.e("Validation", "Task title is empty")
+                        snackbarMessage.value = "Task title cannot be empty"
+                        return@EditTaskFormScreen
+                    }
+
                     Log.d("EditTaskFormScreen", "Save button clicked for $taskName")
                     val updatedTask = task.copy(
                         title = taskName,
@@ -123,6 +141,8 @@ fun AppNavigation() {
 
         composable(NavigationDestination.AddTask.route) {
             AddTaskFormScreen(
+                snackbarMessage = snackbarMessage,
+                snackbarHostState = snackbarHostState,
                 onBackClick = {
                     Log.d("AddTaskFormScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
@@ -132,11 +152,13 @@ fun AppNavigation() {
 
                     if (ValidationUtils.isTaskTitleEmpty(taskName)) {
                         Log.e("Validation", "Task title is empty")
+                        snackbarMessage.value = "Task title cannot be empty"
                         return@AddTaskFormScreen
                     }
 
                     if (ValidationUtils.isTaskTitleAlreadyRegistered(taskName, taskViewModel.getTasks())) {
                         Log.e("Validation", "Task title already exists")
+                        snackbarMessage.value = "Task with this name already exists"
                         return@AddTaskFormScreen
                     }
 
@@ -162,6 +184,8 @@ fun AppNavigation() {
         composable(NavigationDestination.AdjustWeights.route) {
             AdjustWeightsScreen(
                 weightsViewModel = weightsViewModel,
+                snackbarMessage = snackbarMessage,
+                snackbarHostState = snackbarHostState,
                 onBackClick = {
                     Log.d("AdjustWeightsScreen", "Back button clicked")
                     navController.navigate(NavigationDestination.TaskList.route)
@@ -169,6 +193,7 @@ fun AppNavigation() {
                 onAdjustClick = { weightsValues ->
                     if (!ValidationUtils.isWeightSumEqualToOne(weightsValues)) {
                         Log.e("Validation", "Weights sum does not equal one")
+                        snackbarMessage.value = "Weights cum must be equal to one"
                         return@AdjustWeightsScreen
                     }
 
