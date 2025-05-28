@@ -92,6 +92,12 @@ fun AppNavigation() {
                         return@EditTaskFormScreen
                     }
 
+                    if (ValidationUtils.isTaskTitleAlreadyRegistered(taskName, taskViewModel.getTasks())) {
+                        Log.e("Validation", "Task title already exists")
+                        snackbarMessage.value = "Task with this name already exists"
+                        return@EditTaskFormScreen
+                    }
+
                     Log.d("EditTaskFormScreen", "Save button clicked for $taskName")
                     val updatedTask = task.copy(
                         title = taskName,
@@ -193,7 +199,7 @@ fun AppNavigation() {
                 onAdjustClick = { weightsValues ->
                     if (!ValidationUtils.isWeightSumEqualToOne(weightsValues)) {
                         Log.e("Validation", "Weights sum does not equal one")
-                        snackbarMessage.value = "Weights cum must be equal to one"
+                        snackbarMessage.value = "Weights sum must be equal to one"
                         return@AdjustWeightsScreen
                     }
 
