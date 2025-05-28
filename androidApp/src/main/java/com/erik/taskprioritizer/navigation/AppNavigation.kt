@@ -1,7 +1,6 @@
 package com.erik.taskprioritizer.navigation
 
 import android.os.Build
-import android.os.FileUtils
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,6 +19,7 @@ import com.erik.taskprioritizer.ui.PriorityTasksListScreen
 
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.util.ExportUtils
+import com.erik.taskprioritizer.util.ValidationUtils
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 import com.erik.taskprioritizer.util.saveToDownloads
@@ -129,6 +129,17 @@ fun AppNavigation() {
                 },
                 onAddClick = { taskName, criteriaValues ->
                     Log.d("AddTaskFormScreen", "Add button clicked for $taskName")
+
+                    if (ValidationUtils.isTaskTitleEmpty(taskName)) {
+                        Log.e("Validation", "Task title is empty")
+                        return@AddTaskFormScreen
+                    }
+
+                    if (ValidationUtils.isTaskTitleAlreadyRegistered(taskName, taskViewModel.getTasks())) {
+                        Log.e("Validation", "Task title already exists")
+                        return@AddTaskFormScreen
+                    }
+
                     val task = Task(
                         title = taskName,
                         benefit = (criteriaValues["Benefit"]!!).toInt(),
@@ -156,6 +167,11 @@ fun AppNavigation() {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onAdjustClick = { weightsValues ->
+                    if (!ValidationUtils.isWeightSumEqualToOne(weightsValues)) {
+                        Log.e("Validation", "Weights sum does not equal one")
+                        return@AdjustWeightsScreen
+                    }
+
                     Log.d("AdjustWeightsScreen", "Adjust button clicked")
                     val newWeightsValues = listOf("Benefit", "Complexity", "Urgency", "Risk")
                         .associateWith { weightsValues[it]!!}
