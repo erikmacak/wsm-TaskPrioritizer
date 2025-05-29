@@ -7,10 +7,10 @@ import kotlinx.serialization.Serializable
 data class Task (
     private val id: String = generateUUID(),
     private val title: String,
-    private val benefit: Int,
-    private val complexity: Int,
-    private val urgency: Int,
-    private val risk: Int,
+    private val benefit: Int = 0,
+    private val complexity: Int = 0,
+    private val urgency: Int = 0,
+    private val risk: Int = 0,
     private var isExpanded: Boolean = false,
     private var priorityScore: Float = 0f,
     private var rank: Int = 0
