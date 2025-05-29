@@ -2,7 +2,6 @@ package com.erik.taskprioritizer
 
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.util.ValidationUtils
-import kotlin.math.abs
 import kotlin.test.*
 
 class ValidationUtilsTest {
