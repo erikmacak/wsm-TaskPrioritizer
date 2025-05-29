@@ -1,14 +1,7 @@
 package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -36,6 +29,7 @@ import com.erik.taskprioritizer.ui.components.SliderHeading
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.TextGray
+
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,19 +41,22 @@ fun AdjustWeightsScreen(
     onBackClick: () -> Unit,
     onAdjustClick: (Map<String, Float>) -> Unit) {
 
+    // Load the current weights from the ViewModel
     val criteria = weightsViewModel.getWeights()
 
-    // State map to hold slider values for each criterion, initialized to 0
+    // Remember the current slider values for each criterion
     val sliderValues = remember {
         mutableStateMapOf<String, Float>().apply {
             criteria.forEach { (key, value) -> put(key, value) }
         }
     }
 
+    // Update slider values if the weights change
     LaunchedEffect(criteria) {
         criteria.forEach { (key, value) -> sliderValues[key] = value }
     }
 
+    // Show a snackbar message if one is provided
     LaunchedEffect(snackbarMessage.value) {
         snackbarMessage.value?.let {
             snackbarHostState.showSnackbar(it)
@@ -67,6 +64,7 @@ fun AdjustWeightsScreen(
         }
     }
 
+    // Main UI layout with snackbar support
     Scaffold (
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->

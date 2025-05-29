@@ -16,6 +16,6 @@ object ValidationUtils {
     }
 
     fun isAtLeastOneTaskInTaskRepository(taskRepository: List<Task>): Boolean {
-        return taskRepository.isNotEmpty()
+        return taskRepository.isEmpty()
     }
 }

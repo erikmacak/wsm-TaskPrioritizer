@@ -1,6 +1,7 @@
 package com.erik.taskprioritizer.util
 
 import com.erik.taskprioritizer.model.Task
+
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

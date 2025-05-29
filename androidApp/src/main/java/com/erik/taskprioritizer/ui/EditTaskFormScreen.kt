@@ -1,43 +1,22 @@
 package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.erik.taskprioritizer.model.Task
 
+import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.ui.components.BackActionButton
 import com.erik.taskprioritizer.ui.components.CustomSlider
 import com.erik.taskprioritizer.ui.components.IntroductoryText
 import com.erik.taskprioritizer.ui.components.SearchBar
 import com.erik.taskprioritizer.ui.components.SliderHeading
-
 import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.TextGray
@@ -50,6 +29,7 @@ fun EditTaskFormScreen(
     snackbarHostState: SnackbarHostState,
     onBackClick: () -> Unit,
     onSaveClick: (taskName: String, Map<String, Float>) -> Unit) {
+
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -61,13 +41,14 @@ fun EditTaskFormScreen(
         "Risk"
     )
 
-    // State map to hold slider values for each criterion, initialized to 0
+    // Holds current values of sliders for each criterion
     val sliderValues = remember {
         mutableStateMapOf<String, Float>().apply {
             criteria.forEach{ put(it, 0f) }
         }
     }
 
+    // Initialize the form with values from the selected task
     LaunchedEffect(task) {
         searchQuery = task.getTitle()
         sliderValues["Benefit"] = task.getBenefit().toFloat()
@@ -76,6 +57,7 @@ fun EditTaskFormScreen(
         sliderValues["Risk"] = task.getRisk().toFloat()
     }
 
+    // Show a snackbar message if one is provided
     LaunchedEffect(snackbarMessage.value) {
         snackbarMessage.value?.let {
             snackbarHostState.showSnackbar(it)
@@ -83,6 +65,7 @@ fun EditTaskFormScreen(
         }
     }
 
+    // Main layout with snackbar support
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->

@@ -26,10 +26,11 @@ fun TaskListScreen(
     onRemoveClick: (taskId: String) -> Unit,
     onAddTaskClick: () -> Unit,
     onAdjustWeightsClick: () -> Unit) {
+
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
-    //
+    // Filters tasks dynamically based on the search input
     val tasks by remember(searchQuery, taskViewModel) {
         derivedStateOf {
             if (searchQuery.isNotBlank()) {

@@ -2,32 +2,29 @@ package com.erik.taskprioritizer.navigation
 
 import android.os.Build
 import android.util.Log
+
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
 import com.erik.taskprioritizer.ui.AddTaskFormScreen
 import com.erik.taskprioritizer.ui.AdjustWeightsScreen
-import com.erik.taskprioritizer.ui.TaskListScreen
 import com.erik.taskprioritizer.ui.EditTaskFormScreen
 import com.erik.taskprioritizer.ui.PriorityTasksListScreen
+import com.erik.taskprioritizer.ui.TaskListScreen
 
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.util.ExportUtils
 import com.erik.taskprioritizer.util.ValidationUtils
+import com.erik.taskprioritizer.util.saveToDownloads
 import com.erik.taskprioritizer.viewmodel.TaskViewModel
 import com.erik.taskprioritizer.viewmodel.WeightsViewModel
-import com.erik.taskprioritizer.util.saveToDownloads
-
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.material3.SnackbarHostState
-
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,10 +40,12 @@ fun AppNavigation() {
 
     val context = LocalContext.current
 
+    //Navigation structure definition
     NavHost(
         navController = navController,
         startDestination = NavigationDestination.TaskList.route
     ) {
+        // Main screen showing list of tasks
         composable(NavigationDestination.TaskList.route) {
             TaskListScreen (
                 taskViewModel = taskViewModel,
@@ -73,10 +72,12 @@ fun AppNavigation() {
             )
         }
 
+        // Screen for editing an existing task
         composable(NavigationDestination.EditTask.routeWithArg) { backStackEntry ->
             val taskId = backStackEntry.arguments!!.getString("taskId")
 
             val task = taskViewModel.getTaskById(taskId.toString())
+
             EditTaskFormScreen(
                 task = task,
                 snackbarMessage = snackbarMessage,
@@ -118,6 +119,7 @@ fun AppNavigation() {
             )
         }
 
+        // Route for task deletion – handled immediately via LaunchedEffect
         composable(NavigationDestination.RemoveTask.routeWithArg) { backStackEntry ->
             val taskId = backStackEntry.arguments!!.getString("taskId")
             
@@ -127,6 +129,8 @@ fun AppNavigation() {
             }
         }
 
+        // Screen showing prioritized tasks (sorted by priority score)
+        // Includes export to CSV and JSON functionality
         composable(NavigationDestination.PriorityTaskList.route) {
             PriorityTasksListScreen(
                 snackbarMessage = snackbarMessage,
@@ -159,6 +163,7 @@ fun AppNavigation() {
             )
         }
 
+        // Screen for adding a new task to the list
         composable(NavigationDestination.AddTask.route) {
             AddTaskFormScreen(
                 snackbarMessage = snackbarMessage,
@@ -201,6 +206,7 @@ fun AppNavigation() {
             )
         }
 
+        // Screen for adjusting the weight values of criteria (Benefit, Complexity, etc.)
         composable(NavigationDestination.AdjustWeights.route) {
             AdjustWeightsScreen(
                 weightsViewModel = weightsViewModel,

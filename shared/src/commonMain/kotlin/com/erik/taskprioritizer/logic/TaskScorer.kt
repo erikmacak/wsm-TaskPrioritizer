@@ -1,6 +1,7 @@
 package com.erik.taskprioritizer.logic
 
 import com.erik.taskprioritizer.model.Task
+
 import kotlin.math.roundToInt
 
 object TaskScorer {

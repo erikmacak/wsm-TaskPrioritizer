@@ -61,7 +61,6 @@ fun CustomSlider(
 
         Row(
             modifier = Modifier.padding(horizontal = axisHorizontalPadding),
-            //horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             labels.forEach { label ->
                 Text(

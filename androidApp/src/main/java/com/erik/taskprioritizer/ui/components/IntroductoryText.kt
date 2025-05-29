@@ -19,7 +19,6 @@ fun IntroductoryText(text: String, modifier: Modifier = Modifier) {
         fontFamily = Montserrat,
         fontWeight = FontWeight.Black,
         color = Color.White,
-        modifier = modifier
-            .padding(bottom = 16.dp)
+        modifier = modifier.padding(bottom = 16.dp)
     )
 }

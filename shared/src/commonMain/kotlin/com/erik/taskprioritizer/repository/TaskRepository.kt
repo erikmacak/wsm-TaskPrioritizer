@@ -1,6 +1,7 @@
 package com.erik.taskprioritizer.repository
 
 import com.erik.taskprioritizer.logic.TaskRanker
+
 import com.erik.taskprioritizer.model.Task
 
 object TaskRepository {

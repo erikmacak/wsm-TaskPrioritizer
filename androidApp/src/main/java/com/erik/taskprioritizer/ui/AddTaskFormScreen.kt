@@ -2,17 +2,8 @@ package com.erik.taskprioritizer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,10 +21,6 @@ import com.erik.taskprioritizer.ui.theme.Green
 import com.erik.taskprioritizer.ui.theme.Montserrat
 import com.erik.taskprioritizer.ui.theme.TextGray
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarHost
-
 @ExperimentalMaterial3Api
 @Composable
 fun AddTaskFormScreen (
@@ -41,6 +28,7 @@ fun AddTaskFormScreen (
     snackbarHostState: SnackbarHostState,
     onBackClick: () -> Unit,
     onAddClick: (taskName: String, Map<String, Float>) -> Unit) {
+
     // State variable to hold the current search query
     var searchQuery by remember { mutableStateOf("") }
 
@@ -59,6 +47,7 @@ fun AddTaskFormScreen (
         }
     }
 
+    // Show snackbar if there's a message
     LaunchedEffect(snackbarMessage.value) {
         snackbarMessage.value?.let {
             snackbarHostState.showSnackbar(it)
@@ -66,10 +55,10 @@ fun AddTaskFormScreen (
         }
     }
 
+    // Layout scaffold with snackbar support
     Scaffold (
         snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) {
-        paddingValues ->
+    ) { paddingValues ->
         // Main column layout for the UI
         Column (
             modifier = Modifier
@@ -115,7 +104,6 @@ fun AddTaskFormScreen (
 
             // Create sliders for each criterion
             criteria.forEach { label ->
-                // Display the heading for the slider
                 SliderHeading(label = label)
 
                 CustomSlider(
