@@ -17,7 +17,6 @@ object ValidationUtils {
         }
     }
 
-
     fun isWeightSumEqualToOne(weights: Map<String, Float>): Boolean {
         return weights.values.sum() in 0.99f..1.01f
     }

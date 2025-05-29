@@ -11,9 +11,9 @@ class ValidationUtilsTest {
     @BeforeTest
     fun setup() {
         sampleTasks = listOf(
-            Task(title = "Create PR"),
-            Task(title = "Fix bug"),
-            Task(title = "Write tests")
+            Task(id = "1", title = "Create PR"),
+            Task(id = "2", title = "Fix bug"),
+            Task(id = "3", title = "Write tests")
         )
     }
 
@@ -51,6 +51,16 @@ class ValidationUtilsTest {
         assertTrue(ValidationUtils.isTaskTitleAlreadyRegistered("create pr", sampleTasks))
     }
 
+    @Test
+    fun testChangeTaskTitleWithDifferentTaskId() {
+        assertTrue(ValidationUtils.isTaskTitleAlreadyRegisteredExceptCurrent("Create PR", sampleTasks, "4"))
+    }
+
+    @Test
+    fun testChangeTaskTitleWithSameTaskId() {
+        assertFalse(ValidationUtils.isTaskTitleAlreadyRegisteredExceptCurrent("Create PR", sampleTasks, "1"))
+    }
+
     // --- Weight validation ---
 
     @Test
@@ -84,5 +94,19 @@ class ValidationUtilsTest {
             "Risk" to 0.300001f
         )
         assertTrue(ValidationUtils.isWeightSumEqualToOne(weights))
+    }
+
+    // --- Tests for amount tasks in task repository ---
+
+    @Test
+    fun testOneTaskInTaskRepository() {
+        val emptyList = emptyList<Task>()
+        assertFalse(ValidationUtils.isAtLeastOneTaskInTaskRepository(emptyList))
+    }
+
+    @Test
+    fun testNoTaskInTaskRepository() {
+        val nonEmptyList = listOf(Task(title = "Sample Task"))
+        assertTrue(ValidationUtils.isAtLeastOneTaskInTaskRepository(nonEmptyList))
     }
 }
