@@ -11,11 +11,18 @@ object ValidationUtils {
         return taskRepository.any { it.getTitle().equals(taskTitle, ignoreCase = true) }
     }
 
+    fun isTaskTitleAlreadyRegisteredExceptCurrent(taskName: String, allTasks: List<Task>, currentTaskId: String): Boolean {
+        return allTasks.any { task ->
+            task.getTitle().equals(taskName, ignoreCase = true) && task.getId() != currentTaskId
+        }
+    }
+
+
     fun isWeightSumEqualToOne(weights: Map<String, Float>): Boolean {
         return weights.values.sum() in 0.99f..1.01f
     }
 
     fun isAtLeastOneTaskInTaskRepository(taskRepository: List<Task>): Boolean {
-        return taskRepository.isEmpty()
+        return taskRepository.isNotEmpty()
     }
 }
