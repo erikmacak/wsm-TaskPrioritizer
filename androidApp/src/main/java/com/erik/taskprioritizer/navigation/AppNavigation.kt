@@ -129,6 +129,8 @@ fun AppNavigation() {
 
         composable(NavigationDestination.PriorityTaskList.route) {
             PriorityTasksListScreen(
+                snackbarMessage = snackbarMessage,
+                snackbarHostState = snackbarHostState,
                 taskViewModel = taskViewModel,
                 onAllClick = {
                     Log.d("PriorityTaskListScreen", "All section clicked")
