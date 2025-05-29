@@ -135,10 +135,22 @@ fun AppNavigation() {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onCsvExportClick = {
+                    if (ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
+                        Log.e("Validation", "Task repository is empty")
+                        snackbarMessage.value = "There has to be at least one task to export"
+                        return@PriorityTasksListScreen
+                    }
+
                     val csv = ExportUtils.exportToCsv(taskViewModel.getRankedTasks())
                     saveToDownloads(context, "tasks.csv", "text/csv", csv)
                 },
                 onJsonExportClick = {
+                    if (ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
+                        Log.e("Validation", "Task repository is empty")
+                        snackbarMessage.value = "There has to be at least one task to export"
+                        return@PriorityTasksListScreen
+                    }
+
                     val json = ExportUtils.exportToJson(taskViewModel.getRankedTasks())
                     saveToDownloads(context, "tasks.json", "application/json", json)
                 }
