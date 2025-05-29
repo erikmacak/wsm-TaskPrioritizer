@@ -8,7 +8,7 @@ object ValidationUtils {
     }
 
     fun isTaskTitleAlreadyRegistered(taskTitle: String, taskRepository: List<Task>): Boolean {
-        return taskRepository.any { it.getTitle() == taskTitle }
+        return taskRepository.any { it.getTitle().equals(taskTitle, ignoreCase = true) }
     }
 
     fun isWeightSumEqualToOne(weights: Map<String, Float>): Boolean {
