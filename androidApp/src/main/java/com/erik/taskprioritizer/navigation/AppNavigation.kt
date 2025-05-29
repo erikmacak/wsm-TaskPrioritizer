@@ -93,7 +93,7 @@ fun AppNavigation() {
                         return@EditTaskFormScreen
                     }
 
-                    if (ValidationUtils.isTaskTitleAlreadyRegistered(taskName, taskViewModel.getTasks())) {
+                    if (ValidationUtils.isTaskTitleAlreadyRegisteredExceptCurrent(taskName, taskViewModel.getTasks(), task.getId())) {
                         Log.e("Validation", "Task title already exists")
                         snackbarMessage.value = "Task with this name already exists"
                         return@EditTaskFormScreen
@@ -141,7 +141,7 @@ fun AppNavigation() {
                     navController.navigate(NavigationDestination.TaskList.route)
                 },
                 onCsvExportClick = {
-                    if (ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
+                    if (!ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
                         Log.e("Validation", "Task repository is empty")
                         snackbarMessage.value = "There has to be at least one task to export"
                         return@PriorityTasksListScreen
@@ -151,7 +151,7 @@ fun AppNavigation() {
                     saveToDownloads(context, "tasks.csv", "text/csv", csv)
                 },
                 onJsonExportClick = {
-                    if (ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
+                    if (!ValidationUtils.isAtLeastOneTaskInTaskRepository(taskViewModel.getTasks())) {
                         Log.e("Validation", "Task repository is empty")
                         snackbarMessage.value = "There has to be at least one task to export"
                         return@PriorityTasksListScreen
