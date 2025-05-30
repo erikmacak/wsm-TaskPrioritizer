@@ -1,7 +1,9 @@
 package com.erik.taskprioritizer.viewmodel
 
 import android.util.Log
+
 import androidx.lifecycle.ViewModel
+
 import com.erik.taskprioritizer.repository.WeightsRepository
 
 class WeightsViewModel: ViewModel() {

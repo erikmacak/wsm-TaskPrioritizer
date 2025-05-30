@@ -1,8 +1,10 @@
 package com.erik.taskprioritizer.viewmodel
 
 import android.util.Log
+
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
+
 import com.erik.taskprioritizer.logic.TaskScorer
 import com.erik.taskprioritizer.model.Task
 import com.erik.taskprioritizer.repository.TaskRepository
