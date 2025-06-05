@@ -63,7 +63,7 @@ To run this project locally, follow the steps below:
 
 ---
 
-📤 Export Details
+## 📤 Export Details
 
 - Tasks can be exported via the UI (CSV / JSON)
 - Files are saved to Downloads/ via Android's MediaStore API
